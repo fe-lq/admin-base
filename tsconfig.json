@@ -1,0 +1,21 @@
+{
+  "include": ["src", "global.d.ts"],
+  "exclude": ["src/**/__tests__/*", "node_modules"],
+  "compilerOptions": {
+    "composite": true,
+    "baseUrl": ".",
+    "jsxImportSource": "vue",
+    "jsx": "preserve",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "lib": ["ES2020", "dom"],
+    "module": "es2020",
+    "moduleResolution": "Node",
+    "strict": true,
+    "target": "ES6",
+    "esModuleInterop": true,
+    // 指定"types": []来禁用自动引入@types包。
+    "types": ["vite/client"]
+  }
+}
