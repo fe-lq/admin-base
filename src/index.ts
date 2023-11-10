@@ -4,7 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import { GarfishInit } from './config'
-import PageNotFound from './components/not-page/PageNotFound.vue'
+import PageNotFound from './components/no-page/PageNotFound.vue'
 import './assets/style.css'
 
 const routes = [
@@ -12,7 +12,7 @@ const routes = [
     path: '/',
     component: App,
   },
-  { path: '/goods', component: App },
+  { path: '/archives', component: App },
   { path: '/:pathMatch(.*)*', name: 'notFound', component: PageNotFound },
 ]
 

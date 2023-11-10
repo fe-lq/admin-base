@@ -1,9 +1,18 @@
 {
-  "include": ["src", "global.d.ts"],
-  "exclude": ["src/**/__tests__/*", "node_modules"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "global.d.ts"
+  ],
+  "exclude": ["node_modules", "dist", "src/**/__tests__/*"],
   "compilerOptions": {
+    "useDefineForClassFields": true,
     "composite": true,
     "baseUrl": ".",
+    "noEmit": true,
+    "isolatedModules": true,
     "jsxImportSource": "vue",
     "jsx": "preserve",
     "paths": {
@@ -16,6 +25,6 @@
     "target": "ES6",
     "esModuleInterop": true,
     // 指定"types": []来禁用自动引入@types包。
-    "types": ["vite/client"]
+    "types": ["node", "vite/client", "element-plus/global"]
   }
 }

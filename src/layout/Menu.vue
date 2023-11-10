@@ -1,5 +1,4 @@
 <script setup lang="tsx"></script>
-
 <template>
   <div>侧边栏</div>
   <RouterLink to="/goods/page1">Home</RouterLink>

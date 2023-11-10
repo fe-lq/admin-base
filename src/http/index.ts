@@ -5,6 +5,8 @@ type MethodKey = 'post' | 'get' | 'delete' | 'put' | 'patch'
 const http = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE,
   timeout: 5000,
+  // 自动携带cookie
+  withCredentials: true,
 })
 
 http.interceptors.request.use(
@@ -27,21 +29,21 @@ http.interceptors.response.use(
 )
 
 const createRequest = (type: MethodKey) => {
-  return <R, P>(url: string, params: R, config: AxiosRequestConfig) => {
+  return <R, P>(url: string) => {
     const paramKey = type === 'get' ? 'params' : 'data'
-    return http.request({
-      method: type,
-      url,
-      [paramKey]: params,
-      ...config,
-    }) as Promise<P>
+    return async (params: R, config?: AxiosRequestConfig) => {
+      return http.request({
+        method: type,
+        url,
+        [paramKey]: params,
+        ...config,
+      }) as Promise<P>
+    }
   }
 }
 
-export default {
-  postRequest: createRequest('post'),
-  getRequest: createRequest('get'),
-  deleteRequest: createRequest('delete'),
-  putRequest: createRequest('put'),
-  patchRequest: createRequest('patch'),
-}
+export const postRequest = createRequest('post')
+export const getRequest = createRequest('get')
+export const deleteRequest = createRequest('delete')
+export const putRequest = createRequest('put')
+export const patchRequest = createRequest('patch')
