@@ -40,9 +40,7 @@ const handleLogin = async () => {
       </el-form>
       <div class="login-footer">
         <el-button type="primary" @click="handleLogin">登录</el-button>
-        <el-button @click="dialogVisible = true" type="primary" plain
-          >注册</el-button
-        >
+        <el-button plain type="primary" @click="dialogVisible = true"> 注册 </el-button>
       </div>
     </div>
   </div>

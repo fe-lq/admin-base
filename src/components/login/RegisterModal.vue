@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive, ref } from 'vue'
-import { loginApi } from '@/api/user'
+import { computed, reactive } from 'vue'
 
 interface FormType {
   userName?: string

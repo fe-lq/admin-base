@@ -1,18 +1,24 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import { createRouter, createWebHistory } from 'vue-router'
+import { type RouteRecordRaw, createRouter, createWebHistory } from 'vue-router'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import { GarfishInit } from './config'
-import PageNotFound from './components/no-page/PageNotFound.vue'
+import PageNotFound from '@/views/no-page/Index.vue'
 import './assets/style.css'
+import LoginView from '@/views/login/Index.vue'
+import AdminView from '@/views/admin/Index.vue'
 
-const routes = [
+const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    component: App,
+    redirect: '/login',
   },
-  { path: '/archives', component: App },
+  {
+    path: '/login',
+    component: LoginView,
+  },
+  { path: '/admin', component: AdminView },
   { path: '/:pathMatch(.*)*', name: 'notFound', component: PageNotFound },
 ]
 
