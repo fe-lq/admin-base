@@ -5,9 +5,9 @@ import LayoutContent from '@/layout/Content.vue'
 </script>
 
 <template>
-  <div class="common-layout">
-    <el-container>
-      <el-header><LayoutHeader /></el-header>
+  <div>
+    <el-container direction="vertical">
+      <LayoutHeader />
       <el-container>
         <el-aside width="200px"><LayoutMenu /></el-aside>
         <RouterView name="notFound" />
