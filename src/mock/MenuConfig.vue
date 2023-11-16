@@ -1,6 +1,6 @@
 <script lang="ts">
 import { Micros } from '@/config/micro'
-import { Document, Location, Setting, HomeFilled } from '@element-plus/icons-vue'
+import { Document, Location, Setting, House } from '@element-plus/icons-vue'
 import type { DefineComponent } from 'vue'
 interface MenuItem {
   icon?: DefineComponent
@@ -11,7 +11,7 @@ interface MenuItem {
 }
 export const menuConfig: MenuItem[] = [
   {
-    icon: HomeFilled,
+    icon: House,
     url: '/home',
     name: '首页',
     id: '999',
