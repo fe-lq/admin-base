@@ -2,12 +2,12 @@ import GarfishInstance from 'garfish'
 
 export enum Micros {
   ARCHIVES = 'archives',
-  USERS = 'users',
+  GOODS = 'goods',
 }
 
 const portMap: Record<Micros, number> = {
   [Micros.ARCHIVES]: 8090,
-  [Micros.USERS]: 8091,
+  [Micros.GOODS]: 8091,
 }
 type MicroList = NonNullable<Parameters<typeof GarfishInstance.run>[0]>['apps']
 
@@ -22,6 +22,6 @@ export const microApps: MicroList = [
   {
     name: '用户',
     activeWhen: '/users',
-    entry: getProxyHost(Micros.USERS),
+    entry: getProxyHost(Micros.GOODS),
   },
 ]

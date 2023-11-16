@@ -10,6 +10,7 @@ import LayoutContent from '@/layout/Content.vue'
     <el-container>
       <LayoutMenu />
       <RouterView name="notFound" />
+      <RouterView name="home" />
       <el-main><LayoutContent /></el-main>
     </el-container>
   </el-container>

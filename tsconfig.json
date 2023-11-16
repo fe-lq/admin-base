@@ -1,11 +1,5 @@
 {
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.d.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-    "global.d.ts"
-  ],
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "global.d.ts"],
   "exclude": ["node_modules", "dist", "src/**/__tests__/*"],
   "compilerOptions": {
     "useDefineForClassFields": true,
@@ -16,7 +10,7 @@
     "jsxImportSource": "vue",
     "jsx": "preserve",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["src/*"]
     },
     "lib": ["ES2020", "dom"],
     "module": "es2020",
@@ -25,6 +19,6 @@
     "target": "ES6",
     "esModuleInterop": true,
     // 指定"types": []来禁用自动引入@types包。
-    "types": ["node", "vite/client", "element-plus/global"]
+    "types": ["vite/client", "element-plus/global"]
   }
 }

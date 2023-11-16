@@ -10,7 +10,8 @@ import logoSrc from '@/assets/logo.jpg'
   <el-header>
     <div class="header" justify="space-between">
       <div class="header-logo">
-        <img :src="logoSrc" width="60" />
+        <img :src="logoSrc" width="50" />
+        <h3 class="header-title">花点Admin</h3>
       </div>
       <div class="user-info">
         <el-space>
@@ -38,16 +39,26 @@ import logoSrc from '@/assets/logo.jpg'
     display: flex;
     justify-content: space-between;
   }
+
+  .header-title {
+    font-weight: 600;
+    color: #fefefe;
+  }
+
+  .header-logo {
+    display: flex;
+    align-items: center;
+  }
   .user-info {
     display: flex;
     justify-content: end;
   }
-}
 
-.header-user {
-  margin-left: 20px;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
+  .header-user {
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
 }
 </style>
