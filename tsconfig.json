@@ -1,5 +1,12 @@
 {
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "global.d.ts"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "src/**/*.json",
+    "global.d.ts"
+  ],
   "exclude": ["node_modules", "dist", "src/**/__tests__/*"],
   "compilerOptions": {
     "useDefineForClassFields": true,
@@ -17,6 +24,7 @@
     "moduleResolution": "Node",
     "strict": true,
     "target": "ES6",
+    "resolveJsonModule": true,
     "esModuleInterop": true,
     // 指定"types": []来禁用自动引入@types包。
     "types": ["vite/client", "element-plus/global"]

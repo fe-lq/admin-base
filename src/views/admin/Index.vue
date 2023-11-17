@@ -5,19 +5,17 @@ import LayoutContent from '@/layout/Content.vue'
 </script>
 
 <template>
-  <el-container direction="vertical">
-    <LayoutHeader />
-    <el-container>
-      <LayoutMenu />
-      <RouterView name="notFound" />
-      <RouterView name="home" />
-      <el-main><LayoutContent /></el-main>
-    </el-container>
+  <LayoutHeader />
+  <el-container>
+    <LayoutMenu />
+    <RouterView />
+    <RouterView name="notFound" />
+    <el-main><LayoutContent /></el-main>
   </el-container>
 </template>
 
 <style scoped lang="scss">
 .el-container {
-  height: 100%;
+  height: calc(100% - 60px);
 }
 </style>

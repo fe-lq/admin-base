@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { Fold, Expand } from '@element-plus/icons-vue'
-import { menuConfig } from '@/mock/MenuConfig.vue'
+import { menuConfig } from '@/mock/menu'
 
 const isCollapse = ref(false)
 const handleOpen = (key: string, keyPath: string[]) => {
@@ -23,18 +23,18 @@ const handleClose = (key: string, keyPath: string[]) => {
       @close="handleClose"
     >
       <template v-for="item in menuConfig" :key="item.id">
-        <el-sub-menu v-if="item.children?.length" :index="item.url">
+        <el-sub-menu v-if="item.children?.length" :index="item.path">
           <template #title>
             <el-icon><component :is="item.icon"></component></el-icon>
             <span>{{ item.name }}</span>
           </template>
-          <el-menu-item v-for="sub in item.children" :key="sub.id" :index="sub.url">
+          <el-menu-item v-for="sub in item.children" :key="sub.id" :index="sub.path">
             {{ sub.name }}
           </el-menu-item>
         </el-sub-menu>
-        <el-menu-item v-else :index="item.url">
+        <el-menu-item v-else :index="item.path">
           <el-icon><component :is="item.icon"></component></el-icon>
-          {{ item.name }}
+          <template #title>{{ item.name }}</template>
         </el-menu-item>
       </template>
       <el-menu-item class="menu-footer">
@@ -42,10 +42,6 @@ const handleClose = (key: string, keyPath: string[]) => {
         <el-icon v-else size="20px" @click="isCollapse = false"><Expand /></el-icon>
       </el-menu-item>
     </el-menu>
-    <!-- <div class="menu-footer">
-      <el-icon v-if="!isCollapse" size="20px" @click="isCollapse = true"><Fold /></el-icon>
-      <el-icon v-else size="20px" @click="isCollapse = false"><Expand /></el-icon>
-    </div> -->
   </el-aside>
 </template>
 
@@ -55,6 +51,7 @@ const handleClose = (key: string, keyPath: string[]) => {
   flex-direction: column;
   .el-menu {
     flex: 1;
+    padding-bottom: 30px;
     .menu-footer {
       position: absolute;
       bottom: 0;

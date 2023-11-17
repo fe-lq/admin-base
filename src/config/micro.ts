@@ -9,6 +9,7 @@ const portMap: Record<Micros, number> = {
   [Micros.ARCHIVES]: 8090,
   [Micros.GOODS]: 8091,
 }
+
 type MicroList = NonNullable<Parameters<typeof GarfishInstance.run>[0]>['apps']
 
 const getProxyHost = (appName: Micros) => `http://localhost:${portMap[appName]}`
@@ -20,8 +21,8 @@ export const microApps: MicroList = [
     entry: getProxyHost(Micros.ARCHIVES),
   },
   {
-    name: '用户',
-    activeWhen: '/users',
+    name: '商品管理',
+    activeWhen: '/goods',
     entry: getProxyHost(Micros.GOODS),
   },
 ]

@@ -8,6 +8,7 @@ import PageNotFound from '@/views/no-page/Index.vue'
 import './assets/style.css'
 import LoginView from '@/views/login/Index.vue'
 import AdminView from '@/views/admin/Index.vue'
+import Home from '@/views/home/Index.vue'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -18,7 +19,16 @@ const routes: RouteRecordRaw[] = [
     path: '/login',
     component: LoginView,
   },
-  { path: '/admin', component: AdminView },
+  {
+    path: '/admin',
+    component: AdminView,
+    children: [
+      {
+        path: 'home',
+        component: Home,
+      },
+    ],
+  },
   { path: '/:pathMatch(.*)*', name: 'notFound', component: PageNotFound },
 ]
 
