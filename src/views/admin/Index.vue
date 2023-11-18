@@ -6,12 +6,11 @@ import LayoutContent from '@/layout/Content.vue'
 
 <template>
   <LayoutHeader />
-  <el-container>
+  <ElContainer>
     <LayoutMenu />
-    <RouterView />
     <RouterView name="notFound" />
-    <el-main><LayoutContent /></el-main>
-  </el-container>
+    <LayoutContent />
+  </ElContainer>
 </template>
 
 <style scoped lang="scss">

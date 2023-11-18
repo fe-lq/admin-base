@@ -7,28 +7,28 @@ import logoSrc from '@/assets/logo.jpg'
 </script>
 
 <template>
-  <el-header>
+  <ElHeader>
     <div class="header" justify="space-between">
       <div class="header-logo">
         <img :src="logoSrc" width="50" />
         <h3 class="header-title">花点Admin</h3>
       </div>
       <div class="user-info">
-        <el-space>
-          <el-input v-model="input" :prefix-icon="Search" placeholder="请搜索功能" />
-          <el-popover placement="bottom" :width="100" trigger="click">
+        <ElSpace>
+          <ElInput v-model="input" :prefix-icon="Search" placeholder="请搜索功能" />
+          <ElPopover placement="bottom" :width="100" trigger="click">
             <template #reference>
               <div class="header-user">
-                <el-avatar :size="40" fit="fill" :src="url" />
+                <ElAvatar :size="40" fit="fill" :src="url" />
                 <div style="margin-left: 6px">用户名</div>
               </div>
             </template>
             <div>"this is content, this is content, this is content"</div>
-          </el-popover>
-        </el-space>
+          </ElPopover>
+        </ElSpace>
       </div>
     </div>
-  </el-header>
+  </ElHeader>
 </template>
 
 <style scoped lang="scss">

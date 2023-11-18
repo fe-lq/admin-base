@@ -1,5 +1,7 @@
+<script setup lang="ts"></script>
 <template>
-  <RouterView />
+  <!-- <RouterView /> -->
+  <div id="subApp"></div>
 </template>
 
 <style></style>

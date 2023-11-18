@@ -30,17 +30,17 @@ const handleLogin = async () => {
     <img :src="imgUrl" alt="背景" style="width: 100%" />
     <div class="login-content">
       <div class="login-title">管理系统</div>
-      <el-form label-width="100px" :model="formFields" style="max-width: 460px">
-        <el-form-item label="手机号">
+      <ElForm label-width="100px" :model="formFields" style="max-width: 460px">
+        <ElFormItem label="手机号">
           <el-input v-model="formFields.phone" placeholder="请输入手机号" />
-        </el-form-item>
-        <el-form-item label="密码">
-          <el-input v-model="formFields.password" placeholder="请输入密码" />
-        </el-form-item>
-      </el-form>
+        </ElFormItem>
+        <ElFormItem label="密码">
+          <ElInput v-model="formFields.password" placeholder="请输入密码" />
+        </ElFormItem>
+      </ElForm>
       <div class="login-footer">
-        <el-button type="primary" @click="handleLogin">登录</el-button>
-        <el-button plain type="primary" @click="dialogVisible = true"> 注册 </el-button>
+        <ElButton type="primary" @click="handleLogin">登录</ElButton>
+        <ElButton plain type="primary" @click="dialogVisible = true"> 注册 </ElButton>
       </div>
     </div>
   </div>

@@ -10,7 +10,7 @@
     "plugin:vue/vue3-recommended",
     "eslint:recommended",
     "prettier",
-    "plugin:prettier/recommended"
+    "@vue/eslint-config-prettier/skip-formatting"
   ],
 
   "plugins": ["vue", "prettier", "@typescript-eslint"],

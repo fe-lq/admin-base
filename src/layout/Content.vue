@@ -1,7 +1,9 @@
-<script setup lang="tsx"></script>
-
+<script setup lang="ts"></script>
 <template>
-  <div id="subApp"></div>
+  <ElMain>
+    <div id="subApp"></div>
+  </ElMain>
+  <!-- 基座路由渲染槽 -->
+  <!-- <RouterView /> -->
+  <!-- 匹配到微应用渲染 -->
 </template>
-
-<style module lane="scss"></style>

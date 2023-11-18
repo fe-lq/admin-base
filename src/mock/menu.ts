@@ -1,5 +1,5 @@
 import { Micros } from '@/config/micro'
-import { Document, Location, Setting, House } from '@element-plus/icons-vue'
+import { Document, Location, Setting, House, Notebook } from '@element-plus/icons-vue'
 import type { DefineComponent } from 'vue'
 
 /** 路由配置项 */
@@ -42,7 +42,7 @@ const routers: Route[] = [
         id: '1-2',
       },
       {
-        path: '/client',
+        path: '/customer',
         name: '客户管理',
         id: '1-3',
       },
@@ -67,7 +67,7 @@ const routers: Route[] = [
     ],
   },
   {
-    icon: Setting,
+    icon: Notebook,
     path: '/online',
     name: '线上档案',
     id: '3',
@@ -83,6 +83,12 @@ const routers: Route[] = [
         id: '3-2',
       },
     ],
+  },
+  {
+    icon: Setting,
+    path: '/menu',
+    name: '菜单管理',
+    id: '55',
   },
 ]
 
