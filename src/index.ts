@@ -9,7 +9,7 @@ import './assets/style.css'
 import LoginView from '@/views/login/Index.vue'
 import AdminView from '@/views/admin/Index.vue'
 import Home from '@/views/home/Index.vue'
-import Garfish from 'garfish'
+// import Garfish from 'garfish'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -39,8 +39,7 @@ const router = createRouter({
 })
 
 const render = () => {
-  GarfishInit()
-  const app = createApp(AdminView)
+  const app = createApp(App)
   app.use(router)
   app.use(ElementPlus)
   app.mount('#app')

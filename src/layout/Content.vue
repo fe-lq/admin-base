@@ -1,6 +1,7 @@
 <script setup lang="ts"></script>
 <template>
   <ElMain>
+    <RouterView />
     <div id="subApp"></div>
   </ElMain>
   <!-- 基座路由渲染槽 -->

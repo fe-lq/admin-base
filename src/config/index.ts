@@ -19,8 +19,10 @@ export const GarfishInit = () => {
   })
 
   try {
+    console.log(document.querySelector('#subApp'))
     Garfish.run(Config)
   } catch (error) {
+    console.log('错啦啦啦啦')
     console.log('garfish init error', error)
   }
 }

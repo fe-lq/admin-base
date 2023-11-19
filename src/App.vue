@@ -1,7 +1,8 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+console.log('jjjj')
+</script>
 <template>
-  <!-- <RouterView /> -->
-  <div id="subApp"></div>
+  <RouterView />
 </template>
 
 <style></style>

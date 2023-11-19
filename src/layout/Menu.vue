@@ -2,26 +2,23 @@
 import { ref } from 'vue'
 import { Fold, Expand } from '@element-plus/icons-vue'
 import { menuConfig } from '@/mock/menu'
+import Garfish from 'garfish'
+import {} from 'vue-router'
 
 const isCollapse = ref(false)
-const handleOpen = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath)
-}
-const handleClose = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath)
+
+const handleClick = (key: string) => {
+  /**
+   * 使用vue-router的跳转有渲染不到的问题
+   * 只能使用微应用自带的编程式导航
+   */
+  Garfish.router.push({ path: key })
 }
 </script>
 
 <template>
   <ElAside width="200px">
-    <ElMenu
-      default-active="2"
-      class="el-menu-vertical-demo"
-      :collapse="isCollapse"
-      router
-      @open="handleOpen"
-      @close="handleClose"
-    >
+    <ElMenu default-active="2" class="el-menu-vertical-demo" :collapse="isCollapse" router>
       <template v-for="item in menuConfig" :key="item.id">
         <ElSubMenu v-if="item.children?.length" :index="item.path">
           <template #title>

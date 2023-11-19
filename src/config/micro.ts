@@ -18,11 +18,13 @@ export const microApps: MicroList = [
   {
     name: '档案管理',
     activeWhen: '/archives',
+    domGetter: '#subApp',
     entry: getProxyHost(Micros.ARCHIVES),
   },
   {
     name: '商品管理',
     activeWhen: '/goods',
+    domGetter: '#subApp',
     entry: getProxyHost(Micros.GOODS),
   },
 ]
