@@ -1,6 +1,4 @@
-<script setup lang="ts">
-console.log('jjjj')
-</script>
+<script setup lang="ts"></script>
 <template>
   <RouterView />
 </template>

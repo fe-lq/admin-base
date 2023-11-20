@@ -1,8 +1,8 @@
 import GarfishInstance from 'garfish'
 
 export enum Micros {
-  ARCHIVES = 'archives',
-  GOODS = 'goods',
+  ARCHIVES = '/archives',
+  GOODS = '/goods',
 }
 
 const portMap: Record<Micros, number> = {
@@ -10,21 +10,19 @@ const portMap: Record<Micros, number> = {
   [Micros.GOODS]: 8091,
 }
 
-type MicroList = NonNullable<Parameters<typeof GarfishInstance.run>[0]>['apps']
+type MicroList = NonNullable<NonNullable<Parameters<typeof GarfishInstance.run>[0]>['apps']>
 
 const getProxyHost = (appName: Micros) => `http://localhost:${portMap[appName]}`
 
 export const microApps: MicroList = [
   {
     name: '档案管理',
-    activeWhen: '/archives',
-    domGetter: '#subApp',
+    activeWhen: Micros.ARCHIVES,
     entry: getProxyHost(Micros.ARCHIVES),
   },
   {
     name: '商品管理',
-    activeWhen: '/goods',
-    domGetter: '#subApp',
+    activeWhen: Micros.GOODS,
     entry: getProxyHost(Micros.GOODS),
   },
 ]

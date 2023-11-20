@@ -17,8 +17,9 @@ const formFields = reactive<FormType>({
 
 const handleLogin = async () => {
   console.log(formFields, '登录')
+
   try {
-    await loginApi(formFields)
+    // await loginApi(formFields)
   } catch (error) {
     console.log(error)
   }

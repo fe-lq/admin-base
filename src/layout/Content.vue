@@ -1,10 +1,9 @@
 <script setup lang="ts"></script>
 <template>
   <ElMain>
+    <!-- <RouterView name="home" />
+    <RouterView name="notFound" /> -->
     <RouterView />
-    <div id="subApp"></div>
+    <div style="min-width: 0px" id="subApp"></div>
   </ElMain>
-  <!-- 基座路由渲染槽 -->
-  <!-- <RouterView /> -->
-  <!-- 匹配到微应用渲染 -->
 </template>

@@ -10,7 +10,7 @@ const isCollapse = ref(false)
 const handleClick = (key: string) => {
   /**
    * 使用vue-router的跳转有渲染不到的问题
-   * 只能使用微应用自带的编程式导航
+   * 只能使用微应用自带的编程式导航统一各个微应用调转方式
    */
   Garfish.router.push({ path: key })
 }
@@ -18,7 +18,12 @@ const handleClick = (key: string) => {
 
 <template>
   <ElAside width="200px">
-    <ElMenu default-active="2" class="el-menu-vertical-demo" :collapse="isCollapse" router>
+    <ElMenu
+      default-active="2"
+      class="el-menu-vertical-demo"
+      :collapse="isCollapse"
+      @select="handleClick"
+    >
       <template v-for="item in menuConfig" :key="item.id">
         <ElSubMenu v-if="item.children?.length" :index="item.path">
           <template #title>

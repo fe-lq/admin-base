@@ -27,7 +27,7 @@ const routers: Route[] = [
   },
   {
     icon: Document,
-    path: `/${Micros.ARCHIVES}`,
+    path: Micros.ARCHIVES,
     name: '档案管理',
     id: '1',
     children: [
@@ -50,7 +50,7 @@ const routers: Route[] = [
   },
   {
     icon: Location,
-    path: `/${Micros.GOODS}`,
+    path: Micros.GOODS,
     name: '商品管理',
     id: '2',
     children: [
@@ -99,7 +99,7 @@ const routers: Route[] = [
  * @returns 拼接完整路由地址的配置
  * TODO: 可以关联权限节点
  */
-const transformRouters = (routers: Route[], baseUrl: string = '/admin') => {
+const transformRouters = (routers: Route[], baseUrl: string = '') => {
   for (const route of routers) {
     route.path = `${baseUrl}${route.path}`
     if (route.children?.length) {

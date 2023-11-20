@@ -2,21 +2,14 @@
 import LayoutHeader from '@/layout/Header.vue'
 import LayoutMenu from '@/layout/Menu.vue'
 import LayoutContent from '@/layout/Content.vue'
-import { GarfishInit } from '@/config'
-import { onMounted } from 'vue'
-console.log('进来')
-onMounted(() => {
-  GarfishInit()
-  console.log(document.querySelector('#subApp'))
-})
 </script>
 
 <template>
   <LayoutHeader />
   <ElContainer>
     <LayoutMenu />
-    <RouterView name="notFound" />
     <LayoutContent />
+    <RouterView name="notFound" />
   </ElContainer>
 </template>
 
