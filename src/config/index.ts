@@ -1,6 +1,7 @@
 import Garfish from 'garfish'
 // import Vue from 'vue'
-import { Config } from './config'
+import { getConfig } from './config'
+import { useBaseStore } from '@/stores'
 
 export const GarfishInit = () => {
   // 共享依赖
@@ -19,7 +20,9 @@ export const GarfishInit = () => {
   })
 
   try {
-    Garfish.run(Config)
+    const baseStore = useBaseStore()
+    const config = getConfig({ props: baseStore })
+    Garfish.run(config)
   } catch (error) {
     console.log('garfish init error', error)
   }

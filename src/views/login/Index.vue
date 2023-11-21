@@ -2,7 +2,7 @@
 import RegisterModal from '@/components/login/RegisterModal.vue'
 import { reactive, ref } from 'vue'
 import { loginApi } from '@/api/user'
-import imgUrl from '@/assets/back.jpg'
+import imgUrl from '@/assets/imgs/back.jpg'
 
 interface FormType {
   phone: string
@@ -50,7 +50,6 @@ const handleLogin = async () => {
 
 <style scoped lang="scss">
 @import '@/scss/index.scss';
-// @/assets/back.jpg
 .login-page {
   height: 100vh;
   overflow: hidden;

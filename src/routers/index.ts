@@ -24,23 +24,8 @@ const routes: RouteRecordRaw[] = [
       // 基座自己的路由
       {
         path: 'home',
-        components: {
-          home: Home,
-        },
+        component: Home,
       },
-      {
-        path: `archives/:url*`,
-        components: {
-          notFound: PageNotFound,
-        },
-      },
-      // 匹配不到子应用的页面时走基座的路由用noPage页面兜底
-      // ...microList.map((microPath) => ({
-      //   path: `${basename}/:path*/:url*`,
-      //   components: {
-      //     notFound: PageNotFound,
-      //   },
-      // })),
     ],
   },
   // 子应用路由, 必须要加不然会直接匹配不到子应用的路由

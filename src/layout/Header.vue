@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { Search } from '@element-plus/icons-vue'
 const input = ref()
 const url = 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
-import logoSrc from '@/assets/logo.jpg'
+import logoSrc from '@/assets/imgs/logo.jpg'
 </script>
 
 <template>
