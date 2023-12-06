@@ -1,11 +1,17 @@
 import { Micros } from '@/config/micro'
-import { Document, Location, Setting, House, Notebook } from '@element-plus/icons-vue'
-import type { DefineComponent } from 'vue'
+import {
+  HomeOutlined,
+  WalletOutlined,
+  SwitcherOutlined,
+  AppstoreOutlined,
+  MenuOutlined,
+} from '@ant-design/icons-vue'
+import type { FunctionalComponent } from 'vue'
 
 /** 路由配置项 */
 interface Route {
   /** 菜单图标 */
-  icon?: DefineComponent
+  icon?: FunctionalComponent
   /** 路径 */
   path: string
   /** 菜单名称 */
@@ -20,13 +26,13 @@ interface Route {
 
 const routers: Route[] = [
   {
-    icon: House,
+    icon: HomeOutlined,
     path: '/home',
     name: '首页',
     id: '999',
   },
   {
-    icon: Document,
+    icon: WalletOutlined,
     path: Micros.ARCHIVES,
     name: '档案管理',
     id: '1',
@@ -49,7 +55,7 @@ const routers: Route[] = [
     ],
   },
   {
-    icon: Location,
+    icon: AppstoreOutlined,
     path: Micros.GOODS,
     name: '商品管理',
     id: '2',
@@ -67,7 +73,7 @@ const routers: Route[] = [
     ],
   },
   {
-    icon: Notebook,
+    icon: SwitcherOutlined,
     path: '/online',
     name: '线上档案',
     id: '3',
@@ -85,7 +91,7 @@ const routers: Route[] = [
     ],
   },
   {
-    icon: Setting,
+    icon: MenuOutlined,
     path: '/menu',
     name: '菜单管理',
     id: '55',

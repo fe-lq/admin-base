@@ -2,11 +2,9 @@
 import imgUrl from '@/assets/imgs/404.png'
 </script>
 <template>
-  <ElResult>
+  <a-result>
     <template #icon>
-      <div style="width: 500px">
-        <ElImage :src="imgUrl" />
-      </div>
+      <a-image width="500px" :preview="false" :src="imgUrl" />
     </template>
-  </ElResult>
+  </a-result>
 </template>

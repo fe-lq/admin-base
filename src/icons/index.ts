@@ -1,5 +1,0 @@
-export { default as Location } from './Location.vue'
-export { default as Document } from './Document.vue'
-export { default as Fold } from './Fold.vue'
-export { default as Expand } from './Expand.vue'
-export { default as Setting } from './Setting.vue'

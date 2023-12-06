@@ -3,11 +3,16 @@ import { useBaseStore } from '@/stores'
 const baseStore = useBaseStore()
 </script>
 <template>
-  <ElMain>
+  <a-layout-content>
     <RouterView />
     <div id="subApp">
       <!-- 未加载微应用时的站位 -->
-      <div v-if="!baseStore.isMounted" v-loading="!baseStore.isMounted" style="height: 450px"></div>
+      <div v-if="!baseStore.isMounted"></div>
     </div>
-  </ElMain>
+  </a-layout-content>
 </template>
+<style scoped lang="scss">
+.ant-layout-content {
+  padding: 10px;
+}
+</style>

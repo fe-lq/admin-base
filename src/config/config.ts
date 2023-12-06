@@ -24,6 +24,7 @@ export const defaultConfig: ConfigOptions = {
   },
   errorLoadApp(error, appInfo) {
     console.error({ [`加载异常-${appInfo.name}`]: error })
+    // GarfishInstance.router.push({ path: '/error' })
   },
 
   // 在子应用渲染后触发该函数

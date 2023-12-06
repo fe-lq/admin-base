@@ -5,16 +5,21 @@ import LayoutContent from '@/layout/Content.vue'
 </script>
 
 <template>
-  <LayoutHeader />
-  <ElContainer>
-    <LayoutMenu />
-    <LayoutContent />
-    <RouterView name="notFound" />
-  </ElContainer>
+  <a-layout class="admin-layout">
+    <LayoutHeader />
+    <a-layout class="admin-container">
+      <LayoutMenu />
+      <LayoutContent />
+      <RouterView name="notFound" />
+    </a-layout>
+  </a-layout>
 </template>
 
 <style scoped lang="scss">
-.el-container {
+.admin-layout {
+  height: 100%;
+}
+.admin-container {
   height: calc(100% - 60px);
 }
 </style>

@@ -13,11 +13,11 @@
   "author": "lq",
   "license": "ISC",
   "dependencies": {
-    "@element-plus/icons-vue": "^2.1.0",
+    "@ant-design/icons-vue": "^7.0.1",
     "@garfish/bridge-vue-v3": "^1.17.1",
+    "ant-design-vue": "^4.0.7",
     "axios": "^1.5.1",
     "echarts": "^5.4.3",
-    "element-plus": "^2.3.7",
     "garfish": "^1.17.1",
     "lodash-es": "^4.17.21",
     "pinia": "^2.1.7",

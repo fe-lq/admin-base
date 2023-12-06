@@ -4,12 +4,12 @@ import BarChart from './components/Bar.vue'
 </script>
 <template>
   <div>首页</div>
-  <ElRow>
-    <ElCol :span="12">
+  <a-row>
+    <a-col :span="12">
       <PieChart />
-    </ElCol>
-    <ElCol :span="12">
+    </a-col>
+    <a-col :span="12">
       <BarChart />
-    </ElCol>
-  </ElRow>
+    </a-col>
+  </a-row>
 </template>

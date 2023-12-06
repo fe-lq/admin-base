@@ -1,72 +1,55 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { Fold, Expand } from '@element-plus/icons-vue'
 import { menuConfig } from '@/mock/menu'
 import Garfish from 'garfish'
 import {} from 'vue-router'
 
 const isCollapse = ref(false)
 
-const handleClick = (key: string) => {
+const handleClick = (path: string) => {
   /**
    * 使用vue-router的跳转有渲染不到的问题
    * 只能使用微应用自带的编程式导航统一各个微应用调转方式
    */
-  Garfish.router.push({ path: key })
+  Garfish.router.push({ path })
 }
 </script>
 
 <template>
-  <ElAside width="200px">
-    <ElMenu
-      default-active="2"
-      class="el-menu-vertical-demo"
-      :collapse="isCollapse"
-      @select="handleClick"
-    >
-      <template v-for="item in menuConfig" :key="item.id">
-        <ElSubMenu v-if="item.children?.length" :index="item.path">
+  <a-layout-sider width="200px" :collapse="isCollapse" collapsible>
+    <a-menu mode="inline" @click="(info) => handleClick(info.key as string)">
+      <template v-for="item in menuConfig">
+        <a-sub-menu v-if="item.children?.length" :key="item.id">
           <template #title>
-            <ElIcon><component :is="item.icon"></component></ElIcon>
+            <component :is="item.icon"></component>
             <span>{{ item.name }}</span>
           </template>
-          <ElMenuItem v-for="sub in item.children" :key="sub.id" :index="sub.path">
-            {{ sub.name }}
-          </ElMenuItem>
-        </ElSubMenu>
-        <ElMenuItem v-else :index="item.path">
-          <ElIcon><component :is="item.icon"></component></ElIcon>
-          <template #title>{{ item.name }}</template>
-        </ElMenuItem>
+          <a-menu-item v-for="sub in item.children" :key="sub.path">
+            <span>{{ sub.name }}</span>
+          </a-menu-item>
+        </a-sub-menu>
+        <a-menu-item :key="item.path" v-else>
+          <component :is="item.icon"></component>
+          <span>{{ item.name }}</span>
+        </a-menu-item>
       </template>
-      <ElMenuItem class="menu-footer">
-        <ElIcon v-if="!isCollapse" size="20px" @click="isCollapse = true"><Fold /></ElIcon>
-        <ElIcon v-else size="20px" @click="isCollapse = false"><Expand /></ElIcon>
-      </ElMenuItem>
-    </ElMenu>
-  </ElAside>
+    </a-menu>
+    <template #trigger>
+      <div class="sider-footer">
+        <menu-fold-outlined v-if="!isCollapse" @click="isCollapse = !isCollapse" />
+        <menu-unfold-outlined v-else @click="isCollapse = !isCollapse" />
+      </div>
+    </template>
+  </a-layout-sider>
 </template>
 
 <style scoped lang="scss">
-.el-aside {
-  display: flex;
-  flex-direction: column;
-  .el-menu {
-    flex: 1;
-    padding-bottom: 30px;
-    .menu-footer {
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      height: 30px;
-      padding: 0 5px;
-    }
-
-    &.el-menu--collapse {
-      .menu-footer {
-        padding: 0 var(--el-menu-base-level-padding);
-      }
-    }
-  }
+.ant-menu {
+  height: 100%;
+  overflow-y: auto;
+}
+.sider-footer {
+  font-size: 18px;
+  background-color: #419eff;
 }
 </style>
