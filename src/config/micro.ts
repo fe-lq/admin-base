@@ -18,6 +18,7 @@ export const microApps: MicroList = [
   {
     name: '档案管理',
     activeWhen: Micros.ARCHIVES,
+    sandbox: false,
     entry: getProxyHost(Micros.ARCHIVES),
   },
   {

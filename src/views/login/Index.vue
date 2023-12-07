@@ -33,10 +33,10 @@ const handleLogin = async () => {
       <div class="login-title">管理系统</div>
       <a-form label-width="100px" :model="formFields" style="max-width: 460px">
         <a-form-item label="手机号">
-          <a-input v-model="formFields.phone" placeholder="请输入手机号" />
+          <a-input v-model:value="formFields.phone" placeholder="请输入手机号" />
         </a-form-item>
         <a-form-item label="密码">
-          <a-input v-model="formFields.password" placeholder="请输入密码" />
+          <a-input v-model:value="formFields.password" placeholder="请输入密码" />
         </a-form-item>
       </a-form>
       <div class="login-footer">

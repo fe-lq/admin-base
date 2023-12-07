@@ -36,20 +36,24 @@ const handleClick = (path: string) => {
     </a-menu>
     <template #trigger>
       <div class="sider-footer">
-        <menu-fold-outlined v-if="!isCollapse" @click="isCollapse = !isCollapse" />
-        <menu-unfold-outlined v-else @click="isCollapse = !isCollapse" />
+        <MenuFoldOutlined v-if="!isCollapse" @click="isCollapse = !isCollapse" />
+        <MenuUnfoldOutlined v-else @click="isCollapse = !isCollapse" />
       </div>
     </template>
   </a-layout-sider>
 </template>
 
 <style scoped lang="scss">
+.ant-layout-sider {
+  background-color: #fff;
+}
 .ant-menu {
   height: 100%;
   overflow-y: auto;
 }
 .sider-footer {
   font-size: 18px;
-  background-color: #419eff;
+  color: #000;
+  background-color: #fff;
 }
 </style>

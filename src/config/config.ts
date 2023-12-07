@@ -13,7 +13,7 @@ export const defaultConfig: ConfigOptions = {
   // 禁用子应用的资源预加载
   disablePreloadApp: true,
   // 沙箱, 如果子应用都是vite项目可以设置全局的sandbox为false
-  sandbox: false,
+  // sandbox: false,
   autoRefreshApp: true,
   // 共享window下的全局变量
   protectVariable: ['Permission'],

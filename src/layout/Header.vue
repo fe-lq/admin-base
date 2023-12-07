@@ -14,19 +14,24 @@ import logoSrc from '@/assets/imgs/logo.jpg'
       </div>
       <div class="user-info">
         <a-space>
-          <a-input v-model="input" placeholder="请搜索功能">
+          <a-input v-model:value="input" placeholder="请搜索功能">
             <template #prefix>
               <SearchOutlined />
             </template>
           </a-input>
-          <a-popover placement="bottom" :width="100" trigger="click">
-            <template #reference>
-              <div class="header-user">
-                <a-avatar :size="40" :src="url" />
-                <div style="margin-left: 6px">用户名</div>
-              </div>
+          <a-popover
+            placement="bottom"
+            arrowPointAtCenter
+            :align="{ offset: [0, -16] }"
+            trigger="click"
+          >
+            <template #content>
+              <div>"this is content"</div>
             </template>
-            <div>"this is content, this is content, this is content"</div>
+            <div class="header-user">
+              <a-avatar :size="40" :src="url" />
+              <div style="margin-left: 6px">用户名</div>
+            </div>
           </a-popover>
         </a-space>
       </div>

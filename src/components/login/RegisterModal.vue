@@ -40,23 +40,23 @@ const handleRegister = async () => {
 </script>
 
 <template>
-  <el-dialog v-model="visible" header="注册信息" width="30%" center>
-    <el-form label-width="100px" :model="formFields" style="max-width: 460px">
-      <el-form-item label="用户名">
-        <el-input v-model="formFields.userName" placeholder="请输入用户名" />
-      </el-form-item>
-      <el-form-item label="手机号">
-        <el-input v-model="formFields.phone" />
-      </el-form-item>
-      <el-form-item label="密码">
-        <el-input v-model="formFields.password" />
-      </el-form-item>
-    </el-form>
+  <a-modal v-model:open="visible" header="注册信息" width="30%" center>
+    <a-form label-width="100px" :model="formFields" style="max-width: 460px">
+      <a-form-item label="用户名">
+        <a-input v-model:value="formFields.userName" placeholder="请输入用户名" />
+      </a-form-item>
+      <a-form-item label="手机号">
+        <a-input v-model:value="formFields.phone" />
+      </a-form-item>
+      <a-form-item label="密码">
+        <a-input v-model:value="formFields.password" />
+      </a-form-item>
+    </a-form>
     <template #footer>
-      <el-button @click="visible = false">取消</el-button>
-      <el-button type="primary" @click="handleRegister"> 确认 </el-button>
+      <a-button @click="visible = false">取消</a-button>
+      <a-button type="primary" @click="handleRegister"> 确认 </a-button>
     </template>
-  </el-dialog>
+  </a-modal>
 </template>
 
 <style scoped lang="scss"></style>
