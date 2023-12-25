@@ -84,8 +84,8 @@ const routers: Route[] = [
         id: '3-1',
       },
       {
-        path: '/sold',
-        name: '线上商品',
+        path: '/active',
+        name: '活动设置',
         id: '3-2',
       },
     ],

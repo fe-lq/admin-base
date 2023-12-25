@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// import { loginApi } from '@/api/user';
 import { computed, reactive } from 'vue'
 
 interface FormType {
@@ -32,7 +33,7 @@ const handleRegister = async () => {
   visible.value = false
   // emit('update:dialogVisible', value)
   // try {
-  //   await loginApi(formFields)
+  // await loginApi(formFields)
   // } catch (error) {
   //   console.log(error)
   // }

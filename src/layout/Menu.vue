@@ -28,7 +28,7 @@ const handleClick = (path: string) => {
             <span>{{ sub.name }}</span>
           </a-menu-item>
         </a-sub-menu>
-        <a-menu-item :key="item.path" v-else>
+        <a-menu-item v-else :key="item.path">
           <component :is="item.icon"></component>
           <span>{{ item.name }}</span>
         </a-menu-item>

@@ -1,14 +1,8 @@
-<script setup lang="ts">
-import { useBaseStore } from '@/stores'
-const baseStore = useBaseStore()
-</script>
+<script setup lang="ts"></script>
 <template>
   <a-layout-content>
     <RouterView />
-    <div id="subApp">
-      <!-- 未加载微应用时的站位 -->
-      <div v-if="!baseStore.isMounted"></div>
-    </div>
+    <div id="subApp"></div>
   </a-layout-content>
 </template>
 <style scoped lang="scss">

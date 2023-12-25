@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import RegisterModal from '@/components/login/RegisterModal.vue'
 import { reactive, ref } from 'vue'
-import { loginApi } from '@/api/user'
+// import { loginApi } from '@/api/user'
 import imgUrl from '@/assets/imgs/back.jpg'
 
 interface FormType {

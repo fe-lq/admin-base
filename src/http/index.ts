@@ -32,12 +32,19 @@ const createRequest = (type: MethodKey) => {
   return <R, P>(url: string) => {
     const paramKey = type === 'get' ? 'params' : 'data'
     return async (params: R, config?: AxiosRequestConfig) => {
-      return http.request({
+      return http.request<
+        P,
+        {
+          code: number
+          data: R
+          message: string
+        }
+      >({
         method: type,
         url,
         [paramKey]: params,
         ...config,
-      }) as Promise<P>
+      })
     }
   }
 }

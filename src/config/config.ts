@@ -18,17 +18,17 @@ export const defaultConfig: ConfigOptions = {
   // 共享window下的全局变量
   protectVariable: ['Permission'],
 
-  beforeLoad(appInfo) {
+  beforeLoad() {
     const baseStore = useBaseStore()
     baseStore.setIsMounted(false)
   },
   errorLoadApp(error, appInfo) {
     console.error({ [`加载异常-${appInfo.name}`]: error })
-    // GarfishInstance.router.push({ path: '/error' })
+    GarfishInstance.router.push({ path: `error` })
   },
 
   // 在子应用渲染后触发该函数
-  afterMount(appInfo) {
+  afterMount() {
     const baseStore = useBaseStore()
     baseStore.setIsMounted(true)
   },

@@ -7,7 +7,8 @@
     "start": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "ts": "vue-tsc --noEmit",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lint": "eslint --ext .vue,.ts src/"
   },
   "keywords": [],
   "author": "lq",
@@ -15,7 +16,7 @@
   "dependencies": {
     "@ant-design/icons-vue": "^7.0.1",
     "@garfish/bridge-vue-v3": "^1.17.1",
-    "ant-design-vue": "^4.0.7",
+    "ant-design-vue": "4.0.6",
     "axios": "^1.5.1",
     "echarts": "^5.4.3",
     "garfish": "^1.17.1",

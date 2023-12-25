@@ -17,3 +17,13 @@ a,
     background-color: hsla(160, 100%, 37%, 0.2);
   }
 }
+/* 全局样式类 */
+.dragStyle {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: move;
+  opacity: 0.5;
+  background-color: #e6f4ff;
+}

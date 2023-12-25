@@ -3,7 +3,7 @@ import LoginView from '@/views/login/Index.vue'
 import AdminView from '@/views/admin/Index.vue'
 import Home from '@/views/home/Index.vue'
 import PageNotFound from '@/views/no-page/Index.vue'
-import { Micros, microApps } from '@/config/micro'
+import { Micros } from '@/config/micro'
 import { basename } from '@/config/config'
 
 const microList = Object.values(Micros)
@@ -26,6 +26,28 @@ const routes: RouteRecordRaw[] = [
         path: 'home',
         component: Home,
       },
+      {
+        path: 'error',
+        component: PageNotFound,
+        props: { tag: 'errorPage' },
+      },
+      {
+        path: 'online',
+        children: [
+          {
+            path: 'order',
+            component: () => import('@/views/online/order/Index.vue'),
+          },
+          {
+            path: 'active',
+            component: () => import('@/views/online/active/Index.vue'),
+          },
+        ],
+      },
+      {
+        path: 'menu',
+        component: () => import('@/views/menu-page/Index.vue'),
+      },
     ],
   },
   // 子应用路由, 必须要加不然会直接匹配不到子应用的路由
@@ -33,7 +55,12 @@ const routes: RouteRecordRaw[] = [
     path: `${basename}${microPath}/:url*`,
     component: AdminView,
   })),
-  { path: '/:pathMatch(.*)*', name: 'notFound', component: PageNotFound },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'notFound',
+    component: PageNotFound,
+    props: { tag: 'notPage' },
+  },
 ]
 
 const router = createRouter({

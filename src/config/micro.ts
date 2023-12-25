@@ -24,6 +24,10 @@ export const microApps: MicroList = [
   {
     name: '商品管理',
     activeWhen: Micros.GOODS,
+    sandbox: {
+      // 开启严格隔离模式，防止ant design部分组件样式不生效
+      strictIsolation: true,
+    },
     entry: getProxyHost(Micros.GOODS),
   },
 ]
