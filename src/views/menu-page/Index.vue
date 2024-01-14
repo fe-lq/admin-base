@@ -1,134 +1,172 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { computed, provide, ref } from 'vue'
 import MenuItems from './components/MenuItems.vue'
 
 import ContentCard from '@/components/ContentCard.vue'
 import SelectIcon from './components/SelectIcon.vue'
-import { MenuItem } from '@/types/menu'
+import { MenuAction, MenuForm, MenuItem, ProvideValues } from '@/types/menu'
+import { addMenu, deleteMenu, getMenuList, updateMenu, updateMenuSort } from '@/api/menu'
+import { MenuInjectKey } from '@/constants'
+import { getMenuParent } from '@/utils'
+import { isEqual, omit } from 'lodash-es'
+import { onBeforeMount } from 'vue'
+import { watch } from 'vue'
+import { Modal, message } from 'ant-design-vue'
+import { toValue } from 'vue'
 
-interface FormValues {
-  menuName?: string
-  permNode?: string
-  icon?: {
-    type: 'icon' | 'image'
-    value: string
-  }
-  menuPath?: string
+type FetchKey = Exclude<MenuAction, MenuAction.DELETE | MenuAction.VIEW>
+
+const defaultRootMenu = { parent: { name: '花点系统' } }
+
+const saveFetchConfig: Record<FetchKey, typeof addMenu | typeof updateMenu> = {
+  [MenuAction.ADD]: addMenu,
+  [MenuAction.EDIT]: updateMenu,
 }
 
-const menuConfig = reactive<MenuItem[]>([
-  {
-    id: '1',
-    name: '菜单1',
-    path: '/menu1',
-    perm: 'MENU1',
-    children: [
-      {
-        id: '101',
-        name: '菜单1-1',
-        perm: 'MENU1_1',
-        path: '/menu1-1',
-      },
-      {
-        id: '102',
-        name: '菜单1-2',
-        perm: 'MENU1_2',
-        path: '/menu1-2',
-        children: [
-          {
-            id: '10201',
-            name: '菜单1-2-1',
-            perm: 'MENU1_2_1',
-            path: '/menu1-2-1',
-          },
-          {
-            id: '10202',
-            name: '菜单1-2-2',
-            perm: 'MENU1_2_2',
-            path: '/menu1-2-2',
-          },
-        ],
-      },
-      {
-        id: '103',
-        name: '菜单1-3',
-        perm: 'MENU1_3',
-        path: '/menu1-3',
-      },
-    ],
-  },
-  {
-    id: '2',
-    name: '菜单2',
-    perm: 'MENU2',
-    path: '/menu2',
-    children: [
-      {
-        id: '201',
-        name: '菜单2-1',
-        perm: 'MENU2_1',
-        path: '/menu2-1',
-      },
-      {
-        id: '202',
-        name: '菜单2-2',
-        perm: 'MENU2_2',
-        path: '/menu2-2',
-        children: [
-          {
-            id: '20201',
-            name: '菜单2-2-1',
-            perm: 'MENU2_2_1',
-            path: '/menu2-2-1',
-          },
-          {
-            id: '20202',
-            name: '菜单2-2-2',
-            perm: 'MENU2_2_2',
-            path: '/menu2-2-2',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: '3',
-    name: '菜单3',
-    perm: 'MENU3',
-    path: '/menu3',
-  },
-  {
-    id: '4',
-    name: '菜单4',
-    perm: 'MENU4',
-    path: '/menu4',
-  },
-  {
-    id: '5',
-    name: '菜单5',
-    perm: 'MENU5',
-    path: '/menu5',
-  },
-])
+const actionType = ref<FetchKey>(MenuAction.ADD)
+const formValues = ref<MenuForm>(defaultRootMenu)
+const menuList = ref<MenuItem[]>([])
+const enableSaveSort = ref<boolean>(true)
+const enableForm = ref<boolean>(true)
 
-const formValues = reactive<FormValues>({})
+const fetchMenuList = async () => {
+  const { data } = await getMenuList()
+  menuList.value = [...data]
+}
 
-const handleSave = () => {
-  console.log('保存', formValues)
+onBeforeMount(() => {
+  fetchMenuList()
+})
+
+const fetchDelete = async (id: number) => {
+  Modal.confirm({
+    title: '确定删除该菜单吗？',
+    okText: '确定',
+    cancelText: '取消',
+    onOk: async () => {
+      await deleteMenu({ id })
+      message.success('操作成功')
+      fetchMenuList()
+    },
+  })
+}
+
+const setEditFormValues = (menu: MenuItem) => {
+  const parentMenu = getMenuParent(menuList.value, menu.parentId)
+  if (parentMenu) {
+    // 编辑当前菜单
+    formValues.value = Object.assign({}, menu, {
+      parent: { name: parentMenu.menuName, id: parentMenu.id },
+    })
+  } else {
+    // 编辑一级菜单
+    formValues.value = Object.assign({}, menu, defaultRootMenu)
+  }
+}
+
+const handleAction: ProvideValues['action'] = (type, menu) => {
+  if (menu) {
+    switch (type) {
+      case MenuAction.ADD:
+        actionType.value = type
+        enableForm.value = false
+        // 在当前菜单下新增菜单
+        formValues.value = {
+          parent: { name: menu.menuName, id: menu.id, path: menu.menuPath },
+          level: menu.children?.length ?? 0,
+        }
+        break
+      case MenuAction.EDIT:
+        actionType.value = type
+        enableForm.value = false
+        setEditFormValues(menu)
+        break
+      case MenuAction.DELETE:
+        fetchDelete(menu.id)
+        break
+      case MenuAction.VIEW:
+        setEditFormValues(menu)
+        enableForm.value = true
+        break
+    }
+  } else {
+    // 新增一级菜单
+    formValues.value = { ...defaultRootMenu, level: menuList.value.length }
+  }
+}
+provide(MenuInjectKey, handleAction)
+
+const sortedMenus = computed<MenuItem[]>(() => {
+  return menuList.value.map((item, index) => {
+    let children = item.children
+    if (item.children?.length) {
+      children = item.children.map((sub, index) => ({ ...sub, level: index }))
+    }
+    return { ...item, level: index, children }
+  })
+})
+
+watch(
+  sortedMenus,
+  (val) => {
+    const noChange = isEqual(val, toValue(menuList))
+    enableSaveSort.value = noChange
+  },
+  { deep: true },
+)
+
+const handleSave = async () => {
+  try {
+    const params = {
+      ...omit(formValues.value, ['parent', 'children']),
+      parentId: formValues.value.parent.id,
+    } as MenuItem
+    await saveFetchConfig[actionType.value](params)
+    enableForm.value = true
+    message.success('操作成功')
+    fetchMenuList()
+  } catch (error: any) {
+    message.error(error.message)
+  }
+}
+
+const handleSaveSort = async () => {
+  await updateMenuSort(sortedMenus.value)
+  message.success('操作成功')
 }
 </script>
 
 <template>
   <ContentCard style="height: 100%">
-    <div>菜单设置</div>
+    <h3>菜单设置</h3>
     <a-row :gutter="16">
-      <a-col :span="12">
+      <a-col :span="12" class="menu-content">
+        <a-row justify="space-between" align="middle">
+          <a-col push="1"> 花点系统 </a-col>
+          <a-col pull="1">
+            <a-space>
+              <a-button type="primary" size="small" @click.stop="handleAction(MenuAction.ADD)"
+                >新增</a-button
+              >
+              <a-button
+                type="primary"
+                size="small"
+                :disabled="enableSaveSort"
+                @click.stop="handleSaveSort"
+                >保存顺序</a-button
+              >
+            </a-space>
+          </a-col>
+        </a-row>
         <a-menu mode="inline">
-          <MenuItems :menus="menuConfig" />
+          <MenuItems key="99" :menus="menuList" />
         </a-menu>
       </a-col>
       <a-col :span="12">
-        <a-form>
+        <a-form :disabled="enableForm">
+          <a-form-item label="上级菜单">
+            <a-input v-model:value="formValues.parent.name" disabled />
+          </a-form-item>
           <a-form-item label="菜单名称">
             <a-input v-model:value="formValues.menuName" placeholder="请输入名称" />
           </a-form-item>
@@ -138,7 +176,7 @@ const handleSave = () => {
           <a-form-item label="菜单地址">
             <a-input
               v-model:value="formValues.menuPath"
-              prefix="/admin"
+              :prefix="`/admin${formValues.parent.path ?? ''}`"
               placeholder="请输入URL路径"
             />
           </a-form-item>
@@ -154,4 +192,12 @@ const handleSave = () => {
   </ContentCard>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.menu-content {
+  border-inline-end: 1px solid #f0f0f0;
+
+  .ant-menu {
+    border: none;
+  }
+}
+</style>

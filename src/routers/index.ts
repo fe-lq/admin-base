@@ -32,19 +32,6 @@ const routes: RouteRecordRaw[] = [
         props: { tag: 'errorPage' },
       },
       {
-        path: 'online',
-        children: [
-          {
-            path: 'order',
-            component: () => import('@/views/online/order/Index.vue'),
-          },
-          {
-            path: 'active',
-            component: () => import('@/views/online/active/Index.vue'),
-          },
-        ],
-      },
-      {
         path: 'menu',
         component: () => import('@/views/menu-page/Index.vue'),
       },

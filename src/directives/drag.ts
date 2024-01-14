@@ -8,7 +8,7 @@ import type { ObjectDirective } from 'vue'
  */
 export const vDrag: ObjectDirective<
   HTMLElement,
-  { data: any[]; id: string; enableDrag?: boolean }
+  { data: any[]; id: number; enableDrag?: boolean }
 > & {
   activeIndex: number | undefined
   activeLevel: string | undefined

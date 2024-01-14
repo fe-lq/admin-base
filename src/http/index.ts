@@ -20,20 +20,22 @@ http.interceptors.request.use(
 
 http.interceptors.response.use(
   (resolve) => {
-    // 如要使用响应的code，就把code放在data中
-    return resolve.data.data
+    return resolve.data
   },
   (error) => {
-    return Promise.reject(error)
+    return Promise.reject(error.response.data)
   },
 )
-
 const createRequest = (type: MethodKey) => {
-  return <R, P>(url: string) => {
+  /**
+   *  泛型
+   *  <响应, 请求>
+   */
+  return <R = unknown, P = unknown>(url: string) => {
     const paramKey = type === 'get' ? 'params' : 'data'
-    return async (params: R, config?: AxiosRequestConfig) => {
+    return async (params?: P, config?: AxiosRequestConfig) => {
       return http.request<
-        P,
+        R,
         {
           code: number
           data: R

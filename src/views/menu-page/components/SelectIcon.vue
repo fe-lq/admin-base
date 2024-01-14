@@ -1,29 +1,30 @@
 <script setup lang="ts">
-import { iconOptions } from '@/constants/menu-icons'
 import { Form, message, Upload, UploadChangeParam, UploadProps } from 'ant-design-vue'
 import { UploadOutlined } from '@ant-design/icons-vue'
-import { ref, computed } from 'vue'
-import { deleteMenuIcon } from '@/api/menu'
-
-type Value = {
-  type: 'icon' | 'image'
-  value: string
-}
+import { ref, computed, onBeforeMount } from 'vue'
+import { deleteMenuIcon, getMenuIcons } from '@/api/menu'
+import { IconOption } from '@/types/menu'
 
 const visible = ref(false)
 const fileList = ref([])
+const iconOptions = ref<IconOption[]>([])
+const isCustom = ref(false)
 
 const url = import.meta.env.VITE_APP_BASE
 
-const props = defineProps<{ value?: Value }>()
-const emits = defineEmits<{ (e: 'update:value', value?: Value): void }>()
+const props = defineProps<{ value?: string }>()
+const emits = defineEmits<{ (e: 'update:value', value?: string): void }>()
 
-const iconItem = computed(() => iconOptions.find((item) => item.value === props.value?.value))
-const iconField = computed(() => props.value)
+const iconField = computed(() => props.value || '')
 
 const formItemContext = Form.useInjectFormItemContext()
 
-const triggerChange = (changedValue?: Value) => {
+onBeforeMount(async () => {
+  const { data } = await getMenuIcons()
+  iconOptions.value = data
+})
+
+const triggerChange = (changedValue?: string) => {
   emits('update:value', changedValue)
   formItemContext.onFieldChange()
 }
@@ -34,11 +35,9 @@ const handleChange = (info: UploadChangeParam) => {
      * 当静态文件夹部署在服务器是用filepath
      * 本地测试先用newFilename
      */
-    const link = info.file.response.data.newFilename
-    triggerChange({
-      type: 'image',
-      value: link,
-    })
+    const link = info.file.response.data.path
+    triggerChange(link)
+    isCustom.value = true
     message.success('上传成功')
   } else if (info.file.status === 'error') {
     message.error('上传失败')
@@ -46,9 +45,10 @@ const handleChange = (info: UploadChangeParam) => {
 }
 
 const handleClearIcon = async () => {
-  if (iconField.value?.type === 'image') {
+  if (iconField.value && isCustom.value) {
     try {
-      await deleteMenuIcon({ filePath: iconField.value?.value })
+      await deleteMenuIcon({ filePath: iconField.value })
+      isCustom.value = false
       message.success('删除成功')
     } catch (error) {
       message.error('删除失败')
@@ -67,13 +67,14 @@ const beforeUpload: UploadProps['beforeUpload'] = (file) => {
   return isSVG || Upload.LIST_IGNORE
 }
 
-const handleSelectIcon = async (icon: string) => {
+const handleSelectIcon = async (iconPath: string) => {
   visible.value = false
-  // iconValue.value = icon
-  triggerChange({ type: 'icon', value: icon })
+
+  triggerChange(iconPath)
   // 如果存在自定义上传文件就清空
-  if (iconField.value && iconField.value.type === 'image') {
-    await deleteMenuIcon({ filePath: iconField.value.value })
+  if (iconField.value) {
+    await deleteMenuIcon({ filePath: iconField.value })
+    isCustom.value = false
   }
 }
 </script>
@@ -83,12 +84,12 @@ const handleSelectIcon = async (icon: string) => {
       <template #content>
         <div class="icons-content">
           <div
-            v-for="item in iconOptions"
-            :key="item.value"
+            v-for="(item, index) in iconOptions"
+            :key="index"
             class="iconItem"
-            @click="() => handleSelectIcon(item.value)"
+            @click="() => handleSelectIcon(item.path)"
           >
-            <component :is="item.icon"></component>
+            <img class="icon-img" :src="item.path" />
           </div>
         </div>
       </template>
@@ -104,7 +105,7 @@ const handleSelectIcon = async (icon: string) => {
       list-type="picture-card"
       :showUploadList="false"
       accept="image/svg+xml"
-      :action="`${url}/files/icon/upload`"
+      :action="`${url}/menu/icon/upload`"
       :before-upload="beforeUpload"
       @change="handleChange"
     >
@@ -113,16 +114,7 @@ const handleSelectIcon = async (icon: string) => {
         上传自定义文件
       </div>
     </a-upload>
-    <component
-      :is="iconItem?.icon"
-      v-else-if="iconField.type === 'icon'"
-      style="font-size: 28px"
-    ></component>
-    <img
-      v-else-if="iconField.type === 'image'"
-      class="icon-img"
-      :src="`http://127.0.0.1:5500/public/icons/${iconField.value}`"
-    />
+    <img v-else class="icon-img" :src="iconField" />
     <a-button v-if="iconField" type="link" style="padding: 0" @click="handleClearIcon"
       >清除</a-button
     >
@@ -137,8 +129,7 @@ const handleSelectIcon = async (icon: string) => {
   gap: 12px;
 }
 .iconItem {
-  font-size: 30px;
-  padding: 0 10px;
+  padding: 8px;
   border: 1px solid #bab6b6;
   border-radius: 8px;
 }

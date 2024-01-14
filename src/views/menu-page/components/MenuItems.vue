@@ -1,98 +1,39 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { MenuOutlined } from '@ant-design/icons-vue'
 import { vDrag } from '@/directives/drag'
 import { MenuItem } from '@/types/menu'
 import MenuItems from './MenuItems.vue'
+import MenuLabel from './MenuLabel.vue'
 
 // 获取props中的menus和level
-const { menus, level = 0 } = defineProps<{
+const props = defineProps<{
   menus: MenuItem[]
-  level?: number
 }>()
 
-// 创建新的level
-const newLevel = ref<number>(level)
-// 创建菜单配置
-const menuConfig = ref<MenuItem[]>(menus)
-
-// 是否显示操作项
-const showOperate = ref<string>()
 // 是否开启拖拽
 const enableDrag = ref<boolean>(false)
 </script>
+
 <template>
   <div
-    v-for="item in menuConfig"
-    :key="item.name"
-    v-drag="{ data: menuConfig, id: item.id, enableDrag }"
-    :data-level="newLevel"
+    v-for="item in props.menus"
+    :key="item.menuName"
+    v-drag="{ data: props.menus, id: item.id, enableDrag }"
+    :data-level="item.parentId"
     class="menu-items"
   >
-    <a-sub-menu v-if="item.children?.length" :key="item.name">
+    <a-sub-menu v-if="item.children?.length" :key="item.menuName" :disabled="false">
       <template #title>
-        <a-row
-          justify="space-between"
-          @mouseenter="showOperate = item.id"
-          @mouseleave="showOperate = undefined"
-        >
-          <a-col>{{ item.name }}</a-col>
-          <a-col v-show="showOperate === item.id">
-            <a-button
-              type="text"
-              @click.stop="
-                (e) => {
-                  console.log('点击了')
-                }
-              "
-              >编辑</a-button
-            >
-            <a-button
-              type="text"
-              @click.stop="
-                (e) => {
-                  console.log('点击了')
-                }
-              "
-              >新增</a-button
-            >
-            <a-button
-              type="text"
-              class="move-btn"
-              @mousedown="enableDrag = true"
-              @mouseleave="enableDrag = false"
-            >
-              <MenuOutlined />
-            </a-button>
-          </a-col>
-        </a-row>
+        <MenuLabel v-model:value="enableDrag" :item="item" />
       </template>
-      <MenuItems :menus="item.children" :level="newLevel + 1" />
+      <MenuItems :menus="item.children" />
     </a-sub-menu>
-    <a-menu-item
-      v-else
-      :key="item.path"
-      @mouseenter="showOperate = item.id"
-      @mouseleave="showOperate = undefined"
-    >
-      <a-row justify="space-between">
-        <a-col>{{ item.name }}</a-col>
-        <a-col v-show="showOperate === item.id">
-          <a-button type="text">编辑</a-button>
-          <a-button type="text">新增</a-button>
-          <a-button
-            type="text"
-            class="move-btn"
-            @mousedown="enableDrag = true"
-            @mouseleave="enableDrag = false"
-          >
-            <MenuOutlined />
-          </a-button>
-        </a-col>
-      </a-row>
+    <a-menu-item v-else :key="item.menuPath">
+      <MenuLabel v-model:value="enableDrag" :item="item" />
     </a-menu-item>
   </div>
 </template>
+
 <style lang="scss" scoped>
 .menu-items {
   // 修改组件样式

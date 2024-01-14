@@ -1,11 +1,5 @@
 import { Micros } from '@/config/micro'
-import {
-  HomeOutlined,
-  WalletOutlined,
-  SwitcherOutlined,
-  AppstoreOutlined,
-  MenuOutlined,
-} from '@ant-design/icons-vue'
+import { HomeOutlined, WalletOutlined, AppstoreOutlined, MenuOutlined } from '@ant-design/icons-vue'
 import type { FunctionalComponent } from 'vue'
 
 /** 路由配置项 */
@@ -69,24 +63,6 @@ const routers: Route[] = [
         path: '/category',
         name: '商品分类',
         id: '2-2',
-      },
-    ],
-  },
-  {
-    icon: SwitcherOutlined,
-    path: '/online',
-    name: '线上档案',
-    id: '3',
-    children: [
-      {
-        path: '/order',
-        name: '订单管理',
-        id: '3-1',
-      },
-      {
-        path: '/active',
-        name: '活动设置',
-        id: '3-2',
       },
     ],
   },
