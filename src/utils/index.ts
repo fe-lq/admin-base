@@ -1,3 +1,5 @@
+import { SECRET_KEY } from '@/constants'
+import Crypto from 'crypto-js'
 import { MenuItem } from '@/types/menu'
 export const getMenuParent = (list: MenuItem[], id?: number): MenuItem | null => {
   if (!id) {
@@ -19,3 +21,5 @@ export const getMenuParent = (list: MenuItem[], id?: number): MenuItem | null =>
   }
   return null
 }
+
+export const genEncryptPsw = (psw: string): string => Crypto.AES.encrypt(psw, SECRET_KEY).toString()

@@ -1,27 +1,30 @@
 <script setup lang="ts">
-import RegisterModal from '@/components/login/RegisterModal.vue'
+import RegisterModal from './components/RegisterModal.vue'
 import { reactive, ref } from 'vue'
-// import { loginApi } from '@/api/user'
+import { loginApi } from '@/api/user'
 import imgUrl from '@/assets/imgs/back.jpg'
-
-interface FormType {
-  phone: string
-  password: string
-}
+import { message } from 'ant-design-vue'
+import { genEncryptPsw } from '@/utils'
+import { LoginParams } from '@/types/login'
+import router from '@/routers'
 
 const dialogVisible = ref<boolean>(false)
-const formFields = reactive<FormType>({
+const formFields = reactive<LoginParams>({
   phone: '',
   password: '',
 })
 
 const handleLogin = async () => {
   console.log(formFields, '登录')
-
+  const cipherText = genEncryptPsw(formFields.password as string)
   try {
-    // await loginApi(formFields)
-  } catch (error) {
-    console.log(error)
+    const {
+      data: { token },
+    } = await loginApi({ ...formFields, password: cipherText })
+    localStorage.setItem('token', token)
+    router.push('/admin/archives/users')
+  } catch (error: any) {
+    message.error(error.message)
   }
 }
 </script>
@@ -31,12 +34,17 @@ const handleLogin = async () => {
     <img :src="imgUrl" alt="背景" style="width: 100%" />
     <div class="login-content">
       <div class="login-title">管理系统</div>
-      <a-form label-width="100px" :model="formFields" style="max-width: 460px">
+      <a-form
+        label-width="100px"
+        :model="formFields"
+        :label-col="{ span: 4 }"
+        style="max-width: 460px"
+      >
         <a-form-item label="手机号">
           <a-input v-model:value="formFields.phone" placeholder="请输入手机号" />
         </a-form-item>
         <a-form-item label="密码">
-          <a-input v-model:value="formFields.password" placeholder="请输入密码" />
+          <a-input-password v-model:value="formFields.password" placeholder="请输入密码" />
         </a-form-item>
       </a-form>
       <div class="login-footer">

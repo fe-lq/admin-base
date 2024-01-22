@@ -5,12 +5,11 @@ type MethodKey = 'post' | 'get' | 'delete' | 'put' | 'patch'
 const http = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE,
   timeout: 5000,
-  // 自动携带cookie
-  withCredentials: true,
 })
 
 http.interceptors.request.use(
   (config) => {
+    config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`
     return config
   },
   (error) => {
@@ -20,10 +19,11 @@ http.interceptors.request.use(
 
 http.interceptors.response.use(
   (resolve) => {
+    console.log(resolve)
     return resolve.data
   },
   (error) => {
-    return Promise.reject(error.response.data)
+    return Promise.reject(error.response?.data)
   },
 )
 const createRequest = (type: MethodKey) => {
