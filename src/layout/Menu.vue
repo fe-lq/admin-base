@@ -1,9 +1,11 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { menuConfig } from '@/mock/menu'
 import Garfish from 'garfish'
-import {} from 'vue-router'
+import { useBaseStore } from '@/stores'
+import { storeToRefs } from 'pinia'
 
+const baseStore = useBaseStore()
+const { menus } = storeToRefs(baseStore)
 const isCollapse = ref(false)
 
 const handleClick = (path: string) => {
@@ -18,19 +20,19 @@ const handleClick = (path: string) => {
 <template>
   <a-layout-sider width="200px" :collapse="isCollapse" collapsible>
     <a-menu mode="inline" @click="(info) => handleClick(info.key as string)">
-      <template v-for="item in menuConfig">
+      <template v-for="item in menus">
         <a-sub-menu v-if="item.children?.length" :key="item.id">
           <template #title>
-            <component :is="item.icon"></component>
-            <span>{{ item.name }}</span>
+            <img class="icon-img" :src="item.icon" />
+            <span>{{ item.menuName }}</span>
           </template>
-          <a-menu-item v-for="sub in item.children" :key="sub.path">
-            <span>{{ sub.name }}</span>
+          <a-menu-item v-for="sub in item.children" :key="sub.menuPath">
+            <span>{{ sub.menuName }}</span>
           </a-menu-item>
         </a-sub-menu>
-        <a-menu-item v-else :key="item.path">
-          <component :is="item.icon"></component>
-          <span>{{ item.name }}</span>
+        <a-menu-item v-else :key="item.menuPath">
+          <img class="icon-img" :src="item.icon" />
+          <span>{{ item.menuName }}</span>
         </a-menu-item>
       </template>
     </a-menu>
@@ -50,6 +52,13 @@ const handleClick = (path: string) => {
 .ant-menu {
   height: 100%;
   overflow-y: auto;
+
+  .icon-img {
+    width: 18px;
+    height: 18px;
+    margin-right: 6px;
+    vertical-align: text-bottom;
+  }
 }
 .sider-footer {
   font-size: 18px;

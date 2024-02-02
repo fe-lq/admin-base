@@ -1,11 +1,16 @@
 export interface MenuItem {
   parentId?: number
   id: number
+  /** 菜单层级 */
   level: number
+  /** 菜单名称 */
   menuName: string
+  /** 路径 */
   menuPath: string
   permNode: string
+  /** 菜单图标 */
   icon?: string
+  /** 子菜单配置 */
   children?: MenuItem[]
 }
 

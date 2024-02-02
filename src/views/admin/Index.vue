@@ -2,17 +2,44 @@
 import LayoutHeader from '@/layout/Header.vue'
 import LayoutMenu from '@/layout/Menu.vue'
 import LayoutContent from '@/layout/Content.vue'
+import { onBeforeMount, ref } from 'vue'
+import { getUserInfoApi } from '@/api/user'
+import { useBaseStore } from '@/stores'
+import { transformRouters } from '@/utils'
+import { message } from 'ant-design-vue'
+import router from '@/routers'
+
+const baseStore = useBaseStore()
+const loading = ref<boolean>(false)
+
+onBeforeMount(async () => {
+  try {
+    loading.value = true
+    const {
+      data: { user, menuList },
+    } = await getUserInfoApi()
+    baseStore.setUser(user)
+    baseStore.setMenus(transformRouters(menuList))
+  } catch (error) {
+    message.error('获取用户信息失败')
+    router.replace('/login')
+  } finally {
+    loading.value = false
+  }
+})
 </script>
 
 <template>
-  <a-layout class="admin-layout">
-    <LayoutHeader />
-    <a-layout class="admin-container">
-      <LayoutMenu />
-      <LayoutContent />
-      <RouterView name="notFound" />
+  <a-spin :spinning="loading">
+    <a-layout class="admin-layout">
+      <LayoutHeader />
+      <a-layout class="admin-container">
+        <LayoutMenu />
+        <LayoutContent />
+        <RouterView name="notFound" />
+      </a-layout>
     </a-layout>
-  </a-layout>
+  </a-spin>
 </template>
 
 <style scoped lang="scss">

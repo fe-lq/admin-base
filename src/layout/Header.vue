@@ -3,6 +3,11 @@ import { ref } from 'vue'
 const input = ref()
 const url = 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
 import logoSrc from '@/assets/imgs/logo.jpg'
+import { useBaseStore } from '@/stores'
+import { storeToRefs } from 'pinia'
+
+const baseStore = useBaseStore()
+const { userInfo } = storeToRefs(baseStore)
 </script>
 
 <template>
@@ -30,7 +35,7 @@ import logoSrc from '@/assets/imgs/logo.jpg'
             </template>
             <div class="header-user">
               <a-avatar :size="40" :src="url" />
-              <div style="margin-left: 6px">用户名</div>
+              <div style="margin-left: 6px">{{ userInfo.userName }}</div>
             </div>
           </a-popover>
         </a-space>

@@ -19,7 +19,10 @@ http.interceptors.request.use(
 
 http.interceptors.response.use(
   (resolve) => {
-    console.log(resolve)
+    // 只要拥有有新token就重新设置
+    if (resolve.headers['refresh-token']) {
+      localStorage.setItem('token', resolve.headers['refresh-token'])
+    }
     return resolve.data
   },
   (error) => {

@@ -68,7 +68,7 @@ const rules: Record<string, Rule[]> = {
   userName: [{ required: true, message: '请输入用户名', trigger: 'blur', max: 12 }],
   phone: [
     { required: true, message: '请输入手机号', trigger: 'blur' },
-    { required: true, message: '请输入正确的手机号', trigger: 'blur', pattern: /^\d{11}$/ },
+    { message: '请输入正确的手机号', trigger: 'blur', pattern: /^\d{11}$/ },
   ],
   password: [{ required: true, validator: validatePass, trigger: 'blur' }],
   checkPassword: [{ required: true, validator: validateCheckPass, trigger: 'blur' }],

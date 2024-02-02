@@ -23,3 +23,20 @@ export const getMenuParent = (list: MenuItem[], id?: number): MenuItem | null =>
 }
 
 export const genEncryptPsw = (psw: string): string => Crypto.AES.encrypt(psw, SECRET_KEY).toString()
+
+/**
+ *
+ * @param routers 路由配置
+ * @param baseUrl 基本路由
+ * @returns 拼接完整路由地址的配置
+ * TODO: 可以关联权限节点
+ */
+export const transformRouters = (routers: MenuItem[], baseUrl: string = '') => {
+  for (const route of routers) {
+    route.menuPath = `${baseUrl}${route.menuPath}`
+    if (route.children?.length) {
+      route.children = transformRouters(route.children, route.menuPath)
+    }
+  }
+  return routers
+}

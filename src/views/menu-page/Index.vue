@@ -56,7 +56,7 @@ const setEditFormValues = (menu: MenuItem) => {
   if (parentMenu) {
     // 编辑当前菜单
     formValues.value = Object.assign({}, menu, {
-      parent: { name: parentMenu.menuName, id: parentMenu.id },
+      parent: { name: parentMenu.menuName, id: parentMenu.id, path: parentMenu.menuPath },
     })
   } else {
     // 编辑一级菜单
@@ -176,7 +176,7 @@ const handleSaveSort = async () => {
           <a-form-item label="菜单地址">
             <a-input
               v-model:value="formValues.menuPath"
-              :prefix="`/admin${formValues.parent.path ?? ''}`"
+              :addon-before="`/admin${formValues.parent.path ?? ''}`"
               placeholder="请输入URL路径"
             />
           </a-form-item>

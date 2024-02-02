@@ -7,6 +7,7 @@ import { Micros } from '@/config/micro'
 import { basename } from '@/config/config'
 
 const microList = Object.values(Micros)
+
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
