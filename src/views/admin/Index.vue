@@ -7,7 +7,6 @@ import { getUserInfoApi } from '@/api/user'
 import { useBaseStore } from '@/stores'
 import { transformRouters } from '@/utils'
 import { message } from 'ant-design-vue'
-import router from '@/routers'
 
 const baseStore = useBaseStore()
 const loading = ref<boolean>(false)
@@ -20,9 +19,8 @@ onBeforeMount(async () => {
     } = await getUserInfoApi()
     baseStore.setUser(user)
     baseStore.setMenus(transformRouters(menuList))
-  } catch (error) {
-    message.error('获取用户信息失败')
-    router.replace('/login')
+  } catch (error: any) {
+    message.error(error.message)
   } finally {
     loading.value = false
   }

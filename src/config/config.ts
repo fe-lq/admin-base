@@ -38,6 +38,6 @@ export const defaultConfig: ConfigOptions = {
   },
 }
 
-export const getConfig = (config: ConfigOptions) => {
+export const getConfig = (config?: ConfigOptions) => {
   return Object.assign({}, defaultConfig, config)
 }

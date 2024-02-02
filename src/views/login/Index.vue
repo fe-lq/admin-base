@@ -22,7 +22,6 @@ const handleLogin = async () => {
     const {
       data: { token },
     } = await loginApi({ ...formFields, password: cipherText })
-
     localStorage.setItem('token', token)
 
     router.push('/admin/home')

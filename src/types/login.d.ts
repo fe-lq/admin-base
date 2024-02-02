@@ -8,4 +8,5 @@ export interface UserInfo {
   phone?: string
   email?: string
   password?: string
+  role?: string
 }

@@ -1,13 +1,28 @@
 <script setup lang="tsx">
+import { LeftOutlined } from '@ant-design/icons-vue'
 import { ref } from 'vue'
 const input = ref()
 const url = 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
 import logoSrc from '@/assets/imgs/logo.jpg'
 import { useBaseStore } from '@/stores'
 import { storeToRefs } from 'pinia'
+import { loginOutApi } from '@/api/user'
+import { message } from 'ant-design-vue'
+import router from '@/routers'
 
 const baseStore = useBaseStore()
 const { userInfo } = storeToRefs(baseStore)
+
+const handleLoginOut = async () => {
+  try {
+    await loginOutApi()
+    localStorage.removeItem('token')
+    router.replace('/login')
+    message.success('退出成功')
+  } catch (error: any) {
+    message.error(error.message)
+  }
+}
 </script>
 
 <template>
@@ -31,7 +46,27 @@ const { userInfo } = storeToRefs(baseStore)
             trigger="click"
           >
             <template #content>
-              <div>"this is content"</div>
+              <div class="info-card">
+                <a-avatar :size="80" :src="url" />
+                <div class="info-name">{{ userInfo.userName }}</div>
+                <div>{{ userInfo.role }}</div>
+                <a-button type="primary" shape="round">个人中心</a-button>
+                <div class="info-line"></div>
+                <a-popover title="语言类型" trigger="click" placement="left">
+                  <template #content>
+                    <div>中文</div>
+                    <div>英语</div>
+                  </template>
+                  <a-button block type="text">
+                    <div class="change-language">
+                      <LeftOutlined class="language-icon" />
+                      切换语言
+                    </div>
+                  </a-button>
+                </a-popover>
+
+                <a-button type="primary" @click="handleLoginOut">退 出</a-button>
+              </div>
             </template>
             <div class="header-user">
               <a-avatar :size="40" :src="url" />
@@ -72,6 +107,38 @@ const { userInfo } = storeToRefs(baseStore)
     display: flex;
     align-items: center;
     cursor: pointer;
+  }
+}
+.ant-popover-inner-content {
+  .info-card {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    .info-name {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .info-line {
+      width: 100%;
+      border-bottom: 1px solid #0000003b;
+    }
+
+    .change-language {
+      width: 100%;
+      text-align: center;
+      position: relative;
+    }
+
+    .language-icon {
+      position: absolute;
+      left: -18px;
+      top: 20%;
+    }
   }
 }
 </style>

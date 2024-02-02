@@ -26,6 +26,9 @@ http.interceptors.response.use(
     return resolve.data
   },
   (error) => {
+    if (error.response?.status === 401) {
+      window.location.replace('/login')
+    }
     return Promise.reject(error.response?.data)
   },
 )
