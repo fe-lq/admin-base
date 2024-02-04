@@ -27,11 +27,19 @@ const actionType = ref<FetchKey>(MenuAction.ADD)
 const formValues = ref<MenuForm>(defaultRootMenu)
 const menuList = ref<MenuItem[]>([])
 const enableSaveSort = ref<boolean>(true)
+const loading = ref<boolean>(false)
 const enableForm = ref<boolean>(true)
 
 const fetchMenuList = async () => {
-  const { data } = await getMenuList()
-  menuList.value = [...data]
+  try {
+    loading.value = true
+    const { data } = await getMenuList()
+    menuList.value = [...data]
+  } catch (error: any) {
+    message.error(error.message)
+  } finally {
+    loading.value = false
+  }
 }
 
 onBeforeMount(() => {
@@ -91,6 +99,7 @@ const handleAction: ProvideValues['action'] = (type, menu) => {
     }
   } else {
     // 新增一级菜单
+    enableForm.value = false
     formValues.value = { ...defaultRootMenu, level: menuList.value.length }
   }
 }
@@ -137,8 +146,7 @@ const handleSaveSort = async () => {
 </script>
 
 <template>
-  <ContentCard style="height: 100%">
-    <h3>菜单设置</h3>
+  <ContentCard title="菜单设置" :loading="loading" style="height: 100%">
     <a-row :gutter="16">
       <a-col :span="12" class="menu-content">
         <a-row justify="space-between" align="middle">

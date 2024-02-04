@@ -12,7 +12,15 @@ export const useBaseStore = defineStore('baseStore', {
   state: (): StoreState => ({
     count: 0,
     isMounted: false,
-    menus: [],
+    menus: [
+      {
+        id: 999,
+        menuName: '菜单设置',
+        menuPath: '/menu',
+        level: 1,
+        permNode: '0',
+      },
+    ],
     userInfo: {},
   }),
   actions: {

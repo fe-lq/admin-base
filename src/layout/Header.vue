@@ -1,7 +1,8 @@
 <script setup lang="tsx">
 import { LeftOutlined } from '@ant-design/icons-vue'
 import { ref } from 'vue'
-const input = ref()
+// TODO: 支持搜索菜单
+const search = ref()
 const url = 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
 import logoSrc from '@/assets/imgs/logo.jpg'
 import { useBaseStore } from '@/stores'
@@ -34,7 +35,7 @@ const handleLoginOut = async () => {
       </div>
       <div class="user-info">
         <a-space>
-          <a-input v-model:value="input" placeholder="请搜索功能">
+          <a-input v-model:value="search" placeholder="请搜索功能">
             <template #prefix>
               <SearchOutlined />
             </template>
@@ -50,9 +51,9 @@ const handleLoginOut = async () => {
                 <a-avatar :size="80" :src="url" />
                 <div class="info-name">{{ userInfo.userName }}</div>
                 <div>{{ userInfo.role }}</div>
-                <a-button type="primary" shape="round">个人中心</a-button>
                 <div class="info-line"></div>
                 <a-popover title="语言类型" trigger="click" placement="left">
+                  <!-- TODO: 支持国际化 -->
                   <template #content>
                     <div>中文</div>
                     <div>英语</div>

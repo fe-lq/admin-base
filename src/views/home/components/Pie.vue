@@ -7,8 +7,7 @@ onMounted(() => {
 
   const pieOption = {
     title: {
-      text: 'Referer of a Website',
-      subtext: 'Fake Data',
+      text: '数据',
       left: 'center',
     },
     tooltip: {

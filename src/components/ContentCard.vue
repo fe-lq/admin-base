@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import type { StyleValue } from 'vue'
+
 interface Props {
+  title?: string
+  loading?: boolean
   style?: StyleValue
   className?: string
 }
@@ -13,7 +16,10 @@ const props = defineProps<Props>()
 
 <template>
   <div :style="props.style" :class="['content-card', props.className]">
-    <slot></slot>
+    <div v-if="!!props.title" class="title">{{ props.title }}</div>
+    <a-spin :spinning="props.loading">
+      <slot></slot>
+    </a-spin>
   </div>
 </template>
 
@@ -22,5 +28,11 @@ const props = defineProps<Props>()
   background-color: #fff;
   border-radius: 6px;
   padding: 10px;
+
+  .title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
 }
 </style>

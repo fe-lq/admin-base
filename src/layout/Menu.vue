@@ -22,16 +22,25 @@ const handleClick = (path: string) => {
     <a-menu mode="inline" @click="(info) => handleClick(info.key as string)">
       <template v-for="item in menus">
         <a-sub-menu v-if="item.children?.length" :key="item.id">
-          <template #title>
+          <template #icon>
             <img class="icon-img" :src="item.icon" />
+          </template>
+          <template #title>
             <span>{{ item.menuName }}</span>
           </template>
           <a-menu-item v-for="sub in item.children" :key="sub.menuPath">
-            <span>{{ sub.menuName }}</span>
+            <template #icon>
+              <img v-if="!!sub.icon" class="icon-img" :src="sub.icon" />
+            </template>
+            <span :style="!!sub.icon ? undefined : { 'margin-left': '10px' }">{{
+              sub.menuName
+            }}</span>
           </a-menu-item>
         </a-sub-menu>
         <a-menu-item v-else :key="item.menuPath">
-          <img class="icon-img" :src="item.icon" />
+          <template #icon>
+            <img class="icon-img" :src="item.icon" />
+          </template>
           <span>{{ item.menuName }}</span>
         </a-menu-item>
       </template>
