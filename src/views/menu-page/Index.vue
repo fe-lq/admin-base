@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, provide, ref } from 'vue'
+import { computed, provide, ref, onBeforeMount, toValue, watch } from 'vue'
 import MenuItems from './components/MenuItems.vue'
 
 import ContentCard from '@/components/ContentCard.vue'
@@ -9,10 +9,7 @@ import { addMenu, deleteMenu, getMenuList, updateMenu, updateMenuSort } from '@/
 import { MenuInjectKey } from '@/constants'
 import { getMenuParent } from '@/utils'
 import { isEqual, omit } from 'lodash-es'
-import { onBeforeMount } from 'vue'
-import { watch } from 'vue'
 import { Modal, message } from 'ant-design-vue'
-import { toValue } from 'vue'
 
 type FetchKey = Exclude<MenuAction, MenuAction.DELETE | MenuAction.VIEW>
 

@@ -9,6 +9,7 @@ const visible = ref(false)
 const fileList = ref([])
 const iconOptions = ref<IconOption[]>([])
 const isCustom = ref(false)
+const token = ref()
 
 const url = import.meta.env.VITE_APP_BASE
 
@@ -22,6 +23,7 @@ const formItemContext = Form.useInjectFormItemContext()
 onBeforeMount(async () => {
   const { data } = await getMenuIcons()
   iconOptions.value = data
+  token.value = window.localStorage.getItem('token')
 })
 
 const triggerChange = (changedValue?: string) => {
@@ -31,10 +33,6 @@ const triggerChange = (changedValue?: string) => {
 
 const handleChange = (info: UploadChangeParam) => {
   if (info.file.status === 'done') {
-    /**
-     * 当静态文件夹部署在服务器是用filepath
-     * 本地测试先用newFilename
-     */
     const link = info.file.response.data.path
     triggerChange(link)
     isCustom.value = true
@@ -106,6 +104,7 @@ const handleSelectIcon = async (iconPath: string) => {
       :showUploadList="false"
       accept="image/svg+xml"
       :action="`${url}/menu/icon/upload`"
+      :headers="{ Authorization: `Bearer ${token}` }"
       :before-upload="beforeUpload"
       @change="handleChange"
     >

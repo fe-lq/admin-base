@@ -12,8 +12,7 @@ const portMap: Record<Micros, number> = {
 
 type MicroList = NonNullable<NonNullable<Parameters<typeof GarfishInstance.run>[0]>['apps']>
 
-const getProxyHost = (appName: Micros) => `http://localhost:${portMap[appName]}`
-
+const getProxyHost = (appName: Micros) => `${import.meta.env.VITE_APP_FE}:${portMap[appName]}`
 export const microApps: MicroList = [
   {
     name: '档案管理',
