@@ -17,7 +17,7 @@
     "@ant-design/icons-vue": "^7.0.1",
     "@garfish/bridge-vue-v3": "^1.17.1",
     "ant-design-vue": "4.0.6",
-    "axios": "^1.5.1",
+    "axios": "^1.6.7",
     "crypto-js": "^4.2.0",
     "echarts": "^5.4.3",
     "garfish": "^1.17.1",
@@ -46,7 +46,7 @@
     "typescript": "^5.2.2",
     "unplugin-auto-import": "^0.16.7",
     "unplugin-vue-components": "^0.25.2",
-    "vite": "^4.4.9",
+    "vite": "^5.1.4",
     "vite-plugin-vue-devtools": "^7.0.8",
     "vue-tsc": "^1.8.15"
   },
@@ -55,5 +55,12 @@
       "prettier --write",
       "eslint --fix"
     ]
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "vite"
+      ]
+    }
   }
 }
