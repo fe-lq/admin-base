@@ -1,5 +1,9 @@
-import { getRequest, postRequest } from '@/http'
+import { postRequest, getRequest, http } from '@fe-lq/micro-kit'
 import { IconOption, MenuItem } from '@/types/menu'
+/**
+ * 后续优化
+ */
+http.defaults.baseURL = import.meta.env.VITE_APP_BASE
 
 export namespace MenuApi {
   export namespace Request {
