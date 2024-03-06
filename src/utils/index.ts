@@ -40,3 +40,15 @@ export const transformRouters = (routers: MenuItem[], baseUrl: string = '') => {
   }
   return routers
 }
+
+export const getMenuLeaf = (list: MenuItem[], permMenus: string[] = []): string[] => {
+  for (const route of list) {
+    const pathItem = `${route.menuPath}`
+    if (route.children?.length) {
+      getMenuLeaf(route.children, permMenus)
+    } else {
+      permMenus.push(pathItem)
+    }
+  }
+  return permMenus
+}

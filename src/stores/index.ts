@@ -4,14 +4,15 @@ import { defineStore } from 'pinia'
 
 interface StoreState {
   count: number
-  isMounted: boolean
+  isMounted?: boolean
   menus: MenuItem[]
   userInfo: UserInfo
 }
+
 export const useBaseStore = defineStore('baseStore', {
   state: (): StoreState => ({
     count: 0,
-    isMounted: false,
+    isMounted: undefined,
     menus: [
       {
         id: 999,

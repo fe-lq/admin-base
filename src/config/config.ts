@@ -11,7 +11,7 @@ export const defaultConfig: ConfigOptions = {
   domGetter: '#subApp',
   basename,
   // 禁用子应用的资源预加载
-  disablePreloadApp: true,
+  disablePreloadApp: false,
   // 沙箱, 如果子应用都是vite项目可以设置全局的sandbox为false
   // sandbox: false,
   autoRefreshApp: true,

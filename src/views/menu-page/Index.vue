@@ -10,6 +10,7 @@ import { MenuInjectKey } from '@/constants'
 import { getMenuParent } from '@/utils'
 import { isEqual, omit } from 'lodash-es'
 import { Modal, message } from 'ant-design-vue'
+const [modal, ContextHolder] = Modal.useModal()
 
 type FetchKey = Exclude<MenuAction, MenuAction.DELETE | MenuAction.VIEW>
 
@@ -44,7 +45,7 @@ onBeforeMount(() => {
 })
 
 const fetchDelete = async (id: number) => {
-  Modal.confirm({
+  modal.confirm({
     title: '确定删除该菜单吗？',
     okText: '确定',
     cancelText: '取消',
@@ -194,6 +195,7 @@ const handleSaveSort = async () => {
         </a-form>
       </a-col>
     </a-row>
+    <ContextHolder />
   </ContentCard>
 </template>
 
