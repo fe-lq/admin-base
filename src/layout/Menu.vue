@@ -1,14 +1,25 @@
+<!-- 该在开发环境组件有个bug，修改script中的内容会递归更新，todo：换组件试 -->
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import Garfish from 'garfish'
 import { useBaseStore } from '@/stores'
 import { storeToRefs } from 'pinia'
+import { basename } from '@/config/config'
+const path = location.pathname.replace(basename, '')
 
+// 获取菜单数据
 const baseStore = useBaseStore()
-const { menus } = storeToRefs(baseStore)
+const { menus, flatMenus } = storeToRefs(baseStore)
+
+const activeItemKey = ref(path)
 const isCollapse = ref(false)
+const openKeys = computed(() => {
+  const parentItem = flatMenus.value.find((item) => activeItemKey.value.startsWith(item.menuPath))
+  return parentItem ? [parentItem.id] : []
+})
 
 const handleClick = (path: string) => {
+  activeItemKey.value = path
   /**
    * 使用vue-router的跳转有渲染不到的问题
    * 只能使用微应用自带的编程式导航统一各个微应用调转方式
@@ -19,7 +30,12 @@ const handleClick = (path: string) => {
 
 <template>
   <a-layout-sider width="200px" :collapse="isCollapse" collapsible>
-    <a-menu mode="inline" @click="(info) => handleClick(info.key as string)">
+    <a-menu
+      mode="inline"
+      :openKeys="openKeys"
+      :selectedKeys="[activeItemKey]"
+      @click="(info) => handleClick(info.key as string)"
+    >
       <template v-for="item in menus">
         <a-sub-menu v-if="item.children?.length" :key="item.id">
           <template #icon>
@@ -32,9 +48,9 @@ const handleClick = (path: string) => {
             <template #icon>
               <img v-if="!!sub.icon" class="icon-img" :src="sub.icon" />
             </template>
-            <span :style="!!sub.icon ? undefined : { 'margin-left': '10px' }">{{
-              sub.menuName
-            }}</span>
+            <span :style="!!sub.icon ? undefined : { 'margin-left': '10px' }">
+              {{ sub.menuName }}
+            </span>
           </a-menu-item>
         </a-sub-menu>
         <a-menu-item v-else :key="item.menuPath">

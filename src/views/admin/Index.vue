@@ -10,7 +10,6 @@ import { message } from 'ant-design-vue'
 
 const baseStore = useBaseStore()
 const loading = ref<boolean>(false)
-
 onBeforeMount(async () => {
   try {
     loading.value = true

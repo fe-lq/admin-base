@@ -14,6 +14,8 @@ export interface MenuItem {
   children?: MenuItem[]
 }
 
+export type FlatMenu = MenuItem & { menuKeys: string[] }
+
 export interface IconOption {
   path: string
   label: string

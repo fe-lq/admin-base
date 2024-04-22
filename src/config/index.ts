@@ -2,7 +2,6 @@ import Garfish from 'garfish'
 // import Vue from 'vue'
 import { getConfig } from './config'
 import { useBaseStore } from '@/stores'
-import { getMenuLeaf } from '@/utils'
 
 export const GarfishInit = () => {
   // 共享依赖
@@ -16,7 +15,7 @@ export const GarfishInit = () => {
     if (store.menus.length === 0) {
       next()
     } else {
-      const hasPerm = getMenuLeaf(store.menus).includes(to.path)
+      const hasPerm = store.flatMenus.find((item) => item.menuPath === to.path)
       if (hasPerm) {
         next()
       }

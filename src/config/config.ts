@@ -31,6 +31,9 @@ export const defaultConfig: ConfigOptions = {
   afterMount() {
     const baseStore = useBaseStore()
     baseStore.setIsMounted(true)
+    // 使用Garfish.channel实现通信
+    // 触发子应用的baseStore事件，传递数据
+    GarfishInstance.channel.emit('baseStore', baseStore.userInfo)
   },
 
   errorMountApp(error, appInfo) {

@@ -6,6 +6,7 @@ interface StoreState {
   count: number
   isMounted?: boolean
   menus: MenuItem[]
+  flatMenus: MenuItem[]
   userInfo: UserInfo
 }
 
@@ -22,14 +23,16 @@ export const useBaseStore = defineStore('baseStore', {
         permNode: '0',
       },
     ],
+    flatMenus: [],
     userInfo: {},
   }),
   actions: {
     setIsMounted(isMounted: boolean) {
       this.isMounted = isMounted
     },
-    setMenus(menus: MenuItem[]) {
-      this.menus = menus
+    setMenus({ routers, flatMenus }: { routers: MenuItem[]; flatMenus: MenuItem[] }) {
+      this.menus = routers
+      this.flatMenus = flatMenus
     },
     setUser(user: UserInfo) {
       this.userInfo = user
