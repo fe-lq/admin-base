@@ -2,3 +2,4 @@ node_modules
 dist
 pnpm-lock.yaml
 vite.config.ts
+!.commitlintrc.mjs

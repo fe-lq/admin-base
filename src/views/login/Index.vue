@@ -24,7 +24,7 @@ const handleLogin = async () => {
     } = await loginApi({ ...formFields, password: cipherText })
     localStorage.setItem('token', token)
 
-    router.push('/admin/home')
+    router.replace('/admin/home')
   } catch (error: any) {
     message.error(error.message)
   } finally {
@@ -39,12 +39,7 @@ const handleLogin = async () => {
       <img :src="imgUrl" alt="背景" style="width: 100%" />
       <div class="login-content">
         <div class="login-title">管理系统</div>
-        <a-form
-          label-width="100px"
-          :model="formFields"
-          :label-col="{ span: 4 }"
-          style="max-width: 460px"
-        >
+        <a-form label-width="100px" :model="formFields" :label-col="{ span: 4 }" style="max-width: 460px">
           <a-form-item label="手机号">
             <a-input v-model:value="formFields.phone" placeholder="请输入手机号" />
           </a-form-item>
@@ -64,9 +59,11 @@ const handleLogin = async () => {
 
 <style scoped lang="scss">
 @import '@/scss/index.scss';
+
 .login-page {
   height: 100vh;
   overflow: hidden;
+
   .login-title {
     text-align: center;
     font-size: 18px;
@@ -87,9 +84,11 @@ const handleLogin = async () => {
     border-radius: 5px;
     background-color: #ffffffd1;
   }
+
   .login-footer {
     display: flex;
     justify-content: center;
+
     button:first-child {
       margin-right: 10px;
     }

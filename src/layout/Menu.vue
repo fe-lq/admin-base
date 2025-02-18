@@ -30,12 +30,8 @@ const handleClick = (path: string) => {
 
 <template>
   <a-layout-sider width="200px" :collapse="isCollapse" collapsible>
-    <a-menu
-      mode="inline"
-      :openKeys="openKeys"
-      :selectedKeys="[activeItemKey]"
-      @click="(info) => handleClick(info.key as string)"
-    >
+    <a-menu mode="inline" :openKeys="openKeys" :selectedKeys="[activeItemKey]"
+      @click="(info) => handleClick(info.key as string)">
       <template v-for="item in menus">
         <a-sub-menu v-if="item.children?.length" :key="item.id">
           <template #icon>
@@ -74,6 +70,7 @@ const handleClick = (path: string) => {
 .ant-layout-sider {
   background-color: #fff;
 }
+
 .ant-menu {
   height: 100%;
   overflow-y: auto;
@@ -85,6 +82,7 @@ const handleClick = (path: string) => {
     vertical-align: text-bottom;
   }
 }
+
 .sider-footer {
   font-size: 18px;
   color: #000;

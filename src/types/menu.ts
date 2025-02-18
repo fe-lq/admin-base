@@ -7,7 +7,7 @@ export interface MenuItem {
   menuName: string
   /** 路径 */
   menuPath: string
-  permNode: string
+  permNode: number
   /** 菜单图标 */
   icon?: string
   /** 子菜单配置 */
@@ -24,7 +24,7 @@ export interface IconOption {
 export interface MenuForm {
   id?: number
   menuName?: string
-  permNode?: string
+  permNode?: number
   icon?: string
   menuPath?: string
   level?: number

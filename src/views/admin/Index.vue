@@ -17,7 +17,9 @@ onBeforeMount(async () => {
       data: { user, menuList },
     } = await getUserInfoApi()
     baseStore.setUser(user)
-    baseStore.setMenus(transformRouters(menuList))
+    if (menuList.length) {
+      baseStore.setMenus(transformRouters(menuList))
+    }
   } catch (error: any) {
     message.error(error.message)
   } finally {
@@ -43,6 +45,7 @@ onBeforeMount(async () => {
 .admin-layout {
   height: 100%;
 }
+
 .admin-container {
   height: calc(100% - 60px);
 }

@@ -9,4 +9,5 @@ export interface UserInfo {
   email?: string
   password?: string
   role?: string
+  status?: boolean
 }

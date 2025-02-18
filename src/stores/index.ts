@@ -20,10 +20,20 @@ export const useBaseStore = defineStore('baseStore', {
         menuName: '菜单设置',
         menuPath: '/menu',
         level: 1,
-        permNode: '0',
+        permNode: 0,
+        icon: 'https://lq-oss2024.oss-cn-hangzhou.aliyuncs.com/icons/database.svg'
       },
     ],
-    flatMenus: [],
+    flatMenus: [
+      {
+        id: 999,
+        menuName: '菜单设置',
+        menuPath: '/menu',
+        level: 1,
+        permNode: 0,
+        icon: 'https://lq-oss2024.oss-cn-hangzhou.aliyuncs.com/icons/database.svg'
+      },
+    ],
     userInfo: {},
   }),
   actions: {
@@ -31,8 +41,8 @@ export const useBaseStore = defineStore('baseStore', {
       this.isMounted = isMounted
     },
     setMenus({ routers, flatMenus }: { routers: MenuItem[]; flatMenus: MenuItem[] }) {
-      this.menus = routers
-      this.flatMenus = flatMenus
+      this.menus = this.menus.concat(routers)
+      this.flatMenus = this.flatMenus.concat(flatMenus)
     },
     setUser(user: UserInfo) {
       this.userInfo = user

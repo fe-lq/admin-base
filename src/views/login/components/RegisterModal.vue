@@ -28,17 +28,19 @@ const visible = computed({
   },
 })
 
-const formFields = reactive<FormType>({})
+const formFields = reactive<FormType>({
+  status: true,
+})
 
 const handleRegister = async () => {
   await formRef.value?.validateFields()
   const cipherText = genEncryptPsw(formFields.password as string)
   try {
-    await registerApi({ ...omit(formFields, 'checkPassword'), password: cipherText })
+    await registerApi({ ...omit(formFields, 'checkPassword'), password: cipherText, })
     message.success('注册成功')
     emit('update:dialogVisible', false)
-  } catch (error) {
-    message.error('注册失败')
+  } catch (error: any) {
+    message.error('注册失败:', error.message)
   }
 }
 const validatePass = async (_rule: Rule, value: string) => {
@@ -87,14 +89,8 @@ const resetForm = () => {
 
 <template>
   <a-modal v-model:open="visible" title="注册信息" width="30%" center :afterClose="resetForm">
-    <a-form
-      ref="formRef"
-      label-width="100px"
-      :model="formFields"
-      :label-col="{ span: 5 }"
-      :rules="rules"
-      style="max-width: 460px"
-    >
+    <a-form ref="formRef" label-width="100px" :model="formFields" :label-col="{ span: 5 }" :rules="rules"
+      style="max-width: 460px">
       <a-form-item label="用户名" name="userName">
         <a-input v-model:value="formFields.userName" placeholder="请输入用户名" />
       </a-form-item>
@@ -102,18 +98,10 @@ const resetForm = () => {
         <a-input v-model:value="formFields.phone" placeholder="请输入手机号" />
       </a-form-item>
       <a-form-item label="密码" name="password">
-        <a-input-password
-          v-model:value="formFields.password"
-          has-feedback
-          placeholder="请输入密码"
-        />
+        <a-input-password v-model:value="formFields.password" has-feedback placeholder="请输入密码" />
       </a-form-item>
       <a-form-item label="确认密码" name="checkPassword">
-        <a-input-password
-          v-model:value="formFields.checkPassword"
-          has-feedback
-          placeholder="请输入密码"
-        />
+        <a-input-password v-model:value="formFields.checkPassword" has-feedback placeholder="请输入密码" />
       </a-form-item>
       <a-form-item label="邮箱" name="email">
         <a-input v-model:value="formFields.email" placeholder="请输入邮箱" />
